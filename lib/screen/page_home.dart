@@ -1,7 +1,7 @@
 import 'dart:js' as js;
 
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/ResponsiveLayout.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/const_utils.dart';
+import '../utils/ResponsiveLayout.dart';
+import '../utils/const_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -24,7 +24,7 @@ class PageHome extends StatelessWidget {
           ConstUtils().widgetUtils.menuTextWithSize(
               context: context,
               name: "HELLO, I’M",
-              color: Colors.yellow,
+              color: Colors.white,
               textSizeSmall: 16,
               textSizeMedium: 22,
               textSizeLarge: 30),

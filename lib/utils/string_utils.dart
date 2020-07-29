@@ -8,9 +8,9 @@ class StringUtils {
   String contactPhone = 'Phone Number';
   String contactEmail = 'Email Address';
   String contactMessage = 'Message...';
-  String fullname = 'TECNO PRASHANT';
-  String bio = 'Freelancer Full Stack Developer';
-  String aboutTital = 'Hi There! Im Prashant';
+  String fullname = 'Craig Stanton';
+  String bio = 'AI Researcher & Developer';
+  String aboutTital = 'Hi There! Im Craig';
   String contactTitle = 'Get In Touch';
   String contactDesc =
       'Tell us what’s on your mind and we will get back to you in a jiffy!';

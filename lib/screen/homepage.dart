@@ -1,10 +1,10 @@
-import 'package:FlutterWeb_Demo_FreelancerProfile/screen/page_about.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/screen/page_contact.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/screen/page_home.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/screen/page_service.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/ResponsiveLayout.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/const_utils.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/widget_utils.dart';
+import './page_about.dart';
+import './page_contact.dart';
+import './page_home.dart';
+import './page_service.dart';
+import '../utils/ResponsiveLayout.dart';
+import '../utils/const_utils.dart';
+import '../utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> menuList = ["HOME", "ABOUT", "SERVICE", "CONTACT"];
+  List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS"];
   int clickPosition = 0;
   Widget widgetbody = PageHome();
 

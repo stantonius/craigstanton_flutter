@@ -1,4 +1,4 @@
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/const_utils.dart';
+import '../utils/const_utils.dart';
 import 'package:flutter/material.dart';
 
 class StyleUtils {

@@ -1,5 +1,5 @@
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/ResponsiveLayout.dart';
-import 'package:FlutterWeb_Demo_FreelancerProfile/utils/const_utils.dart';
+import '../utils/ResponsiveLayout.dart';
+import '../utils/const_utils.dart';
 import 'package:flutter/material.dart';
 
 class WidgetUtils {
