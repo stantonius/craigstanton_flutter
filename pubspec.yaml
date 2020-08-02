@@ -27,6 +27,14 @@ dependencies:
   flutter_rounded_progress_bar:
   flutter_email_sender: ^2.2.1
   google_fonts: ^1.1.0
+  flutter_form_builder: ^3.12.0
+  # below is needed to fix bug with flutter web and flutter form builder - may remove in the future
+  # described in this issue thread https://github.com/flutter/flutter/issues/57275
+  flutter_chips_input: ^1.9.0-dev.1
+  # below only needed because upload currently not supported for web in flutter_form_builder
+  # this was the package that should work but it doesnt
+  # form_builder_file_picker: ^0.2.0
+  file_picker_cross: ^3.0.2
 
 dev_dependencies:
   flutter_test:
