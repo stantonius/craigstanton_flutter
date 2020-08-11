@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^8.5.0
-  flutter_rounded_progress_bar:
+  flutter_rounded_progress_bar: null
   flutter_email_sender: ^2.2.1
   google_fonts: ^1.1.0
   flutter_form_builder: ^3.12.0
@@ -35,15 +35,19 @@ dependencies:
   # this was the package that should work but it doesnt
   # form_builder_file_picker: ^0.2.0
   file_picker_cross: ^3.0.2
+  firebase_core: ^0.4.5
+  cloud_firestore: ^0.13.7
+  firebase_auth: ^0.16.1
+  google_sign_in: ^4.5.1
+  provider: ^4.3.2
+  lit_firebase_auth: ^0.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -58,10 +62,8 @@ flutter:
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -83,7 +85,6 @@ flutter:
     - family: Oswald
       fonts:
         - asset: fonts/Oswald-VariableFont_wght.ttf
-
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

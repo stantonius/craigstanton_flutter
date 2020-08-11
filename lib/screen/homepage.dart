@@ -136,32 +136,44 @@ class _HomePageState extends State<HomePage> {
         ),
         Visibility(
           visible: ResponsiveLayout.isSmallScreen(context) ? false : true,
-          child: Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                padding: EdgeInsets.only(top: 20),
-                height: 80,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: menuList.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        splashColor: Colors.yellow,
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: ConstUtils()
-                              .widgetUtils
-                              .menuText(menuList[index], Colors.white, context),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            clickPosition = index;
-                          });
-                        },
-                      );
-                    }),
-              )),
+          child: Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 20),
+                    height: 80,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: menuList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            splashColor: Colors.yellow,
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: ConstUtils().widgetUtils.menuText(
+                                  menuList[index], Colors.white, context),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                clickPosition = index;
+                              });
+                            },
+                          );
+                        }),
+                  )),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: ResponsiveLayout.isSmallScreen(context) ? 80 : 100,
+                    height: 70,
+                    color: Colors.red,
+                    child: ConstUtils().widgetUtils.button('Testy', context),
+                  ))
+            ],
+          ),
         ),
 
         Align(

@@ -6,5 +6,35 @@
 </head>
 <body>
   <script src="main.dart.js" type="application/javascript"></script>
+
+  <!-- CLient ID for Google Auth -->
+  <meta name="google-signin-client_id" content="702559451717-umgnotgjbusdn3jbiv0qm7ll89t99skv.apps.googleusercontent.com">
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyALZEVHhDs76TSye_t1WUVW_yKvXvtZaOQ",
+    authDomain: "craigstanton-3b97f.firebaseapp.com",
+    databaseURL: "https://craigstanton-3b97f.firebaseio.com",
+    projectId: "craigstanton-3b97f",
+    storageBucket: "craigstanton-3b97f.appspot.com",
+    messagingSenderId: "702559451717",
+    appId: "1:702559451717:web:e277982be1c9c57f79412c",
+    measurementId: "G-Z0EGPJF2RP"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
 </body>
 </html>

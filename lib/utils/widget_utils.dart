@@ -167,6 +167,13 @@ class WidgetUtils {
   }
 
   Widget button(String buttonName, BuildContext context) {
+    return OutlineButton(
+      color: Colors.red,
+      onPressed: () => {print('Pressed')},
+      child: Text(buttonName),
+    );
+
+    /*
     return Card(
       elevation: 8,
       shape: RoundedRectangleBorder(
@@ -189,6 +196,7 @@ class WidgetUtils {
             ),
           )),
     );
+    */
   }
 
   Widget lineHorizontal({double height, Color color}) {
