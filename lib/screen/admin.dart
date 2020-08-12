@@ -8,7 +8,7 @@ class Admin extends StatelessWidget {
     return Scaffold(
         body: Container(
             child: LitAuthState(
-                authenticated: BlogUpdateForm(),
+                authenticated: MainForm(),
                 unauthenticated: Center(
                     child: LitAuth(
                         config: AuthConfig(
