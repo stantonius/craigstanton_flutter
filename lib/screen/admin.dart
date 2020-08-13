@@ -1,23 +1,19 @@
+import 'package:CraigStantonWeb/utils/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:lit_firebase_auth/lit_firebase_auth.dart';
+import 'package:provider/provider.dart';
 import '../utils/form.dart';
+import '../utils/views/signin_view.dart';
 
 class Admin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            child: LitAuthState(
-                authenticated: MainForm(),
-                unauthenticated: Center(
-                    child: LitAuth(
-                        config: AuthConfig(
-                  title: Text('Sign In',
-                      style: Theme.of(context).textTheme.headline1),
-                )))
-
-                //unauthenticated: BlogUpdateForm(),
-                //unintialized: BlogUpdateForm(),
-                )));
+        body: Container(child: Consumer<User>(builder: (_, user, __) {
+      if (user == null) {
+        return SignInView();
+      } else {
+        return MainForm();
+      }
+    })));
   }
 }
