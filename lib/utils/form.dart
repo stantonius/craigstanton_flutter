@@ -1,3 +1,4 @@
+import 'package:CraigStantonWeb/utils/services/authentication/firebase_auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class MainForm extends StatelessWidget {
             onPressed: () {
               print('Context:');
               //context.signOut();
-              //print(context.read());
-              //print(context.read<SignIn>());
+              context.read<FirebaseAuthService>().signOut();
+              //print(context.read<User>());
             },
             color: Colors.red,
           )
