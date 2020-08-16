@@ -1,3 +1,5 @@
+import 'package:CraigStantonWeb/utils/widgets/image_carousel.dart';
+
 import './page_about.dart';
 import './page_contact.dart';
 import './page_home.dart';
@@ -7,13 +9,14 @@ import '../utils/const_utils.dart';
 import '../utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS"];
+  List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS", "BLOG2"];
   int clickPosition = 0;
   Widget widgetbody = PageHome();
 
@@ -163,14 +166,6 @@ class _HomePageState extends State<HomePage> {
                             },
                           );
                         }),
-                  )),
-              Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    width: ResponsiveLayout.isSmallScreen(context) ? 80 : 100,
-                    height: 70,
-                    color: Colors.red,
-                    child: ConstUtils().widgetUtils.button('Testy', context),
                   ))
             ],
           ),
@@ -188,9 +183,12 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.only(
                 top: 100,
               ),
-              child: Image.asset(
+              child: ImageCarousel(),
+              /*
+              Image.asset(
                 ConstUtils().stringUtils.imgProfile,
               ),
+              */
               height: ResponsiveLayout.isSmallScreen(context) ? 300 : 600,
               width: ResponsiveLayout.isSmallScreen(context) ? 300 : 600,
             ),
@@ -216,6 +214,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget bodyPage(int clickPosition) {
+        if (clickPosition == 4) {
+          Navigator.pushNamed(context, '/blog');
+      }
+    
     setState(() {
       if (clickPosition == 0) {
         widgetbody = PageHome();
@@ -227,6 +229,7 @@ class _HomePageState extends State<HomePage> {
         widgetbody = PageContact();
       }
     });
+
 
     return widgetbody;
   }
