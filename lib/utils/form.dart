@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/ResponsiveLayout.dart';
 
@@ -113,6 +114,20 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
                 FormBuilderFieldOption(
                     child: Text("Random Thoughts"), value: "Random Thoughts"),
               ],
+            ),
+          ),
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FormBuilderDateTimePicker(
+                attribute: "date",
+                inputType: InputType.date,
+                format: DateFormat("yyyy-MM-dd"),
+                initialDate: new DateTime.now(),
+                decoration: InputDecoration(
+                    labelText: "Blog Date", fillColor: Colors.white),
+              ),
             ),
           ),
           Row(

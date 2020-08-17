@@ -1,56 +1,64 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+// Code references FlutterFire https://firebase.flutter.dev/docs/firestore/usage/
+// and creates lists with different types of items https://flutter.dev/docs/cookbook/lists/mixed-list
+
+// BlogPage is the main Widget that returns a ListView (BlogList) once the Firestore
+// Query has connected and returned data
+// BlogPage is a copy of the example in FlutterFire ref with the excption of
+// of BlogList widget and returning QuerySnapshot in the Future builder
 class BlogPage extends StatelessWidget {
   const BlogPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     CollectionReference getBlogs = Firestore.instance.collection('blog_dev');
 
     return Scaffold(
-      body:     Container(
-      child: FutureBuilder<QuerySnapshot>(future: getBlogs.getDocuments(),
-      builder:
-          (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
+        body: Container(
+            child: FutureBuilder<QuerySnapshot>(
+      future: getBlogs.getDocuments(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
           List docs = snapshot.data.documents;
-          return Text();
+          // BlogList returns a ListView once connection and data is successful
+          return BlogList(
+              items: List<ListItem>.generate(
+                  docs.length, (index) => BlogItem(docs[index])));
         }
 
         return Text("loading");
       },
-    )
-    )
-    );
-
+    )));
   }
 }
 
+// The Widgets below allow for returning different types of widgets depending on content
 class BlogList extends StatelessWidget {
-  final List<ListItems> items;
-  
+  final List<ListItem> items;
+
   const BlogList({Key key, @required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
 
-          return ListTile(
-            title: item.buildTitle(context),
-            subtitle: item.buildSubtitle(context),
-          );
-        }),
+            return ListTile(
+              //title: item.buildTitle(context),
+              //subtitle: item.buildSubtitle(context),
+              title: item.buildTitle(context),
+              subtitle: item.buildSubtitle(context),
+            );
+          }),
     );
   }
 }
@@ -65,29 +73,19 @@ abstract class ListItem {
 }
 
 /// A ListItem that contains data to display a heading.
-class HeadingItem implements ListItem {
-  final String heading;
+class BlogItem implements ListItem {
+  // Note the change of the datatype to DocumentSnapshot
+  final DocumentSnapshot blog;
 
-  HeadingItem(this.heading);
+  BlogItem(this.blog);
 
   Widget buildTitle(BuildContext context) {
     return Text(
-      heading,
+      blog.data['title'],
       style: Theme.of(context).textTheme.headline2,
     );
   }
 
-  Widget buildSubtitle(BuildContext context) => null;
-}
-
-/// A ListItem that contains data to display a message.
-class MessageItem implements ListItem {
-  final String sender;
-  final String body;
-
-  MessageItem(this.sender, this.body);
-
-  Widget buildTitle(BuildContext context) => Text(sender);
-
-  Widget buildSubtitle(BuildContext context) => Text(body);
+  Widget buildSubtitle(BuildContext context) => Text(blog.data['description'],
+      style: Theme.of(context).textTheme.headline2);
 }
