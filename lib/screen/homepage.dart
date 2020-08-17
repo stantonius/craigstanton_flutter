@@ -9,14 +9,14 @@ import '../utils/const_utils.dart';
 import '../utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS", "BLOG2"];
+  Map<dynamic, dynamic> menuList = ConstUtils().stringUtils.menuItems;
+  //List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS", "BLOG2"];
   int clickPosition = 0;
   Widget widgetbody = PageHome();
 
@@ -67,8 +67,10 @@ class _HomePageState extends State<HomePage> {
                               splashColor: Colors.yellow,
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
-                                child: ConstUtils().widgetUtils.menuText(
-                                    menuList[index], Colors.white, context),
+                                child: ConstUtils().widgetUtils.menuButtons(
+                                    menuList.keys.elementAt(index),
+                                    menuList[menuList.keys.elementAt(index)],
+                                    context),
                               ),
                               onTap: () {
                                 setState(() {
@@ -156,8 +158,10 @@ class _HomePageState extends State<HomePage> {
                             splashColor: Colors.yellow,
                             child: Padding(
                               padding: const EdgeInsets.all(14),
-                              child: ConstUtils().widgetUtils.menuText(
-                                  menuList[index], Colors.white, context),
+                              child: ConstUtils().widgetUtils.menuButtons(
+                                  menuList.keys.elementAt(index),
+                                  menuList[menuList.keys.elementAt(index)],
+                                  context),
                             ),
                             onTap: () {
                               setState(() {
@@ -214,10 +218,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget bodyPage(int clickPosition) {
-        if (clickPosition == 4) {
-          Navigator.pushNamed(context, '/blog');
-      }
-    
     setState(() {
       if (clickPosition == 0) {
         widgetbody = PageHome();
@@ -229,7 +229,6 @@ class _HomePageState extends State<HomePage> {
         widgetbody = PageContact();
       }
     });
-
 
     return widgetbody;
   }

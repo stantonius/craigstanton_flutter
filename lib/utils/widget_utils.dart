@@ -24,6 +24,23 @@ class WidgetUtils {
             color: color));
   }
 
+  Widget menuButtons(
+      String buttontext, String namedlink, BuildContext context) {
+    return Container(
+        padding: EdgeInsets.only(left: 20),
+        child: FlatButton(
+          onPressed: () {
+            Navigator.pushNamed(context, namedlink);
+          },
+          child: Text(
+            buttontext,
+            style: TextStyle(
+                fontSize: ResponsiveLayout.isSmallScreen(context) ? 18 : 20,
+                fontFamily: ConstUtils().stringUtils.fontMenu),
+          ),
+        ));
+  }
+
   Widget menuText(String name, Color color, BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 20),
