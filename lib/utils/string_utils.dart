@@ -51,5 +51,13 @@ class StringUtils {
   String imgIcon = 'images/icon.png';
   String imgProfile = 'images/home_profile.png';
   String imgProfileSmall = 'images/home_profile_small.png';
-  String ic_dart='images/ic_dart.png';
+  String ic_dart = 'images/ic_dart.png';
+
+  //Menu including routes
+  Map menuItems = {
+    "HOME": "/",
+    "ABOUT": "/about",
+    "BLOG": "/blog",
+    "APPS": "/apps"
+  };
 }
