@@ -16,25 +16,50 @@ class BlogPage extends StatelessWidget {
     CollectionReference getBlogs = Firestore.instance.collection('blog_dev');
 
     return Scaffold(
-        body: Container(
-            child: FutureBuilder<QuerySnapshot>(
-      future: getBlogs.getDocuments(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
+      body: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Blogs',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    ],
+                  ),
+                  Row(children: [
+                    FutureBuilder<QuerySnapshot>(
+                      future: getBlogs.getDocuments(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text("Something went wrong");
+                        }
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          List docs = snapshot.data.documents;
-          // BlogList returns a ListView once connection and data is successful
-          return BlogList(
-              items: List<ListItem>.generate(
-                  docs.length, (index) => BlogItem(docs[index])));
-        }
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List docs = snapshot.data.documents;
+                          // BlogList returns a ListView once connection and data is successful
+                          return BlogList(
+                              items: List<ListItem>.generate(docs.length,
+                                  (index) => BlogItem(docs[index])));
+                        }
 
-        return Text("loading");
-      },
-    )));
+                        return Text("loading");
+                      },
+                    )
+                  ]),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -46,19 +71,27 @@ class BlogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final item = items[index];
+    return Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
 
-            return ListTile(
-              //title: item.buildTitle(context),
-              //subtitle: item.buildSubtitle(context),
-              title: item.buildTitle(context),
-              subtitle: item.buildSubtitle(context),
-            );
-          }),
+                  return Container(
+                    color: Colors.red,
+                    child: ListTile(
+                      //title: item.buildTitle(context),
+                      //subtitle: item.buildSubtitle(context),
+                      title: item.buildTitle(context),
+                      subtitle: item.buildSubtitle(context),
+                    ),
+                  );
+                }),
+          ),
+        ],
     );
   }
 }
@@ -82,10 +115,10 @@ class BlogItem implements ListItem {
   Widget buildTitle(BuildContext context) {
     return Text(
       blog.data['title'],
-      style: Theme.of(context).textTheme.headline2,
+      style: Theme.of(context).textTheme.bodyText1,
     );
   }
 
   Widget buildSubtitle(BuildContext context) => Text(blog.data['description'],
-      style: Theme.of(context).textTheme.headline2);
+      style: Theme.of(context).textTheme.bodyText2);
 }
