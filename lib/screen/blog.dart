@@ -1,6 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+/*
+Note on layout building with a ListView widget. There is an issue when nesting
+ListView in 2 columns. Apparently ListView needs to explicitly send the height
+of the space avaiable to its children. So you need to wrap ListView in an Expanded
+widget, which itself is embedded in a Column widget. However if there is a Column 
+widget higher up in the tree you need to ensure it has a defined space (done by
+wrapping it in Padding widget) 
+*/
+
 // Code references FlutterFire https://firebase.flutter.dev/docs/firestore/usage/
 // and creates lists with different types of items https://flutter.dev/docs/cookbook/lists/mixed-list
 
@@ -17,47 +26,45 @@ class BlogPage extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(0),
-        child: Container(
-          child: Row(
+        padding: EdgeInsets.all(0),
+        child: Column(children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Blogs',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    ],
-                  ),
-                  Row(children: [
-                    FutureBuilder<QuerySnapshot>(
-                      future: getBlogs.getDocuments(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text("Something went wrong");
-                        }
-
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          List docs = snapshot.data.documents;
-                          // BlogList returns a ListView once connection and data is successful
-                          return BlogList(
-                              items: List<ListItem>.generate(docs.length,
-                                  (index) => BlogItem(docs[index])));
-                        }
-
-                        return Text("loading");
-                      },
-                    )
-                  ]),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  'Blogs',
+                  style: Theme.of(context).textTheme.headline2,
+                ),
               ),
             ],
           ),
-        ),
+          Expanded(
+              child: FutureBuilder<QuerySnapshot>(
+            future: getBlogs.orderBy('date', descending: true).getDocuments(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong");
+              }
+
+              if (snapshot.connectionState == ConnectionState.done) {
+                List docs = snapshot.data.documents;
+                // BlogList returns a ListView once connection and data is successful
+                return Align(
+                  alignment: Alignment.topCenter,
+                  child: BlogList(
+                      items: List<ListItem>.generate(
+                          docs.length, (index) => BlogItem(docs[index]))),
+                );
+              }
+
+              return Text("loading");
+            },
+          )),
+        ]),
       ),
     );
   }
@@ -71,28 +78,23 @@ class BlogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
 
-                  return Container(
-                    color: Colors.red,
-                    child: ListTile(
-                      //title: item.buildTitle(context),
-                      //subtitle: item.buildSubtitle(context),
-                      title: item.buildTitle(context),
-                      subtitle: item.buildSubtitle(context),
-                    ),
-                  );
-                }),
-          ),
-        ],
-    );
+          return Container(
+            color: Colors.red,
+            alignment: Alignment.topCenter,
+            child: ListTile(
+              //title: item.buildTitle(context),
+              //subtitle: item.buildSubtitle(context),
+              title: item.buildTitle(context),
+              subtitle: item.buildSubtitle(context),
+            ),
+          );
+        });
   }
 }
 

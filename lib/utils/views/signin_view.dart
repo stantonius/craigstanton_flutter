@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/sign_in_view_model.dart';
 import '../widgets/anonymous_sign_in_button.dart';
 import '../widgets/google_sign_in_button.dart';
+import '../const_utils.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({Key key}) : super(key: key);
@@ -58,7 +59,9 @@ class SignInViewBody extends StatelessWidget {
     return Column(
       children: <Widget>[
         const Spacer(),
-        const AnonymousSignInButton(),
+        ConstUtils().helperUtils.isMicrosoftHosted()
+            ? const AnonymousSignInButton()
+            : null,
         GoogleSignInButton(),
         const Spacer(),
       ],

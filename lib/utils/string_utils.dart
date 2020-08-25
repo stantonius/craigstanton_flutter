@@ -42,10 +42,9 @@ class StringUtils {
   String fontContent = 'content';
 
   //Link
-  String linkGithub = 'https://github.com/Prashant09mca';
-  String linkLinkedIn = 'https://www.linkedin.com/in/prashant-padmani-14b55649';
-  String linkFacebook = 'https://www.facebook.com/technoprashant1336/';
-  String linkTwitter = 'https://twitter.com/PadmaniPrashant';
+  String linkGithub = 'https://github.com/stantonius';
+  String linkLinkedIn = 'https://www.linkedin.com/in/craig-stanton-a5132a42/';
+  String linkTwitter = 'https://twitter.com/thecraigman22';
 
   //Image
   String imgIcon = 'images/icon.png';

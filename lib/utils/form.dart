@@ -16,16 +16,11 @@ class MainForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Container(
-            child: Align(
-              child: Text('New Post',
-                  style: Theme.of(context).textTheme.headline1),
-              alignment: Alignment.topCenter,
-            ),
+            child:
+                Text('New Post', style: Theme.of(context).textTheme.headline1),
           ),
-        ]),
-        Row(children: [
           MaterialButton(
             child: Text("Sign Out"),
             onPressed: () {
@@ -116,15 +111,18 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
               ],
             ),
           ),
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          Padding(
+            padding: ResponsiveLayout.isSmallScreen(context)
+                ? const EdgeInsets.symmetric(vertical: 8, horizontal: 8)
+                : const EdgeInsets.symmetric(vertical: 8, horizontal: 200),
+            child: Container(
+              color: Colors.white,
               child: FormBuilderDateTimePicker(
                 attribute: "date",
-                inputType: InputType.date,
-                format: DateFormat("yyyy-MM-dd"),
+                inputType: InputType.both,
+                format: DateFormat("yyyy-MM-dd H:m:ss"),
                 initialDate: new DateTime.now(),
+                initialTime: new TimeOfDay.now(),
                 decoration: InputDecoration(
                     labelText: "Blog Date", fillColor: Colors.white),
               ),
@@ -152,9 +150,11 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
                           'title': _formKey.currentState.value['title'],
                           'description':
                               _formKey.currentState.value['description'],
-                          'tag': _formKey.currentState.value['tag']
+                          'tag': _formKey.currentState.value['tag'],
+                          'date': _formKey.currentState.value['date']
                         });
-                        print(_formKey.currentState.value);
+                        print('Successfully submitted');
+                        _formKey.currentState.reset();
                       }
                     })
               ])
