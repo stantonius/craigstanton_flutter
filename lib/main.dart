@@ -1,7 +1,8 @@
 import 'package:CraigStantonWeb/utils/services/authentication/firebase_auth_service.dart';
 
 import './utils/theme.dart';
-import './routes.dart';
+//import './routes.dart';
+import './utils/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       theme: appTheme(),
       debugShowCheckedModeBanner: true,
       initialRoute: '/',
-      routes: routes,
+      //routes: routes,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
