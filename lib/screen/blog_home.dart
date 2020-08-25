@@ -17,8 +17,8 @@ wrapping it in Padding widget)
 // Query has connected and returned data
 // BlogPage is a copy of the example in FlutterFire ref with the excption of
 // of BlogList widget and returning QuerySnapshot in the Future builder
-class BlogPage extends StatelessWidget {
-  const BlogPage({Key key}) : super(key: key);
+class BlogHome extends StatelessWidget {
+  const BlogHome({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,14 @@ class BlogPage extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(0),
-        child: Column(children: [
+        child: Column(
+          children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 50),
                 child: Text(
                   'Blogs',
                   style: Theme.of(context).textTheme.headline2,
@@ -53,11 +54,11 @@ class BlogPage extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 List docs = snapshot.data.documents;
                 // BlogList returns a ListView once connection and data is successful
-                return Align(
-                  alignment: Alignment.topCenter,
+                return Container(
                   child: BlogList(
-                      items: List<ListItem>.generate(
-                          docs.length, (index) => BlogItem(docs[index]))),
+
+                        items: List<ListItem>.generate(
+                            docs.length, (index) => BlogItem(docs[index]))),
                 );
               }
 
