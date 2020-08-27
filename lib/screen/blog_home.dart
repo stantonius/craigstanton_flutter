@@ -1,5 +1,7 @@
+import 'package:CraigStantonWeb/utils/ResponsiveLayout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /*
 Note on layout building with a ListView widget. There is an issue when nesting
@@ -42,29 +44,36 @@ class BlogHome extends StatelessWidget {
               ),
             ],
           ),
-          Expanded(
-              child: FutureBuilder<QuerySnapshot>(
-            future: getBlogs.orderBy('date', descending: true).getDocuments(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Text("Something went wrong");
-              }
+          Row(
+            children: [
+              Spacer(flex: 1,),
+              Expanded(
+                flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 5,
+                  child: FutureBuilder<QuerySnapshot>(
+                future: getBlogs.orderBy('date', descending: true).getDocuments(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text("Something went wrong");
+                  }
 
-              if (snapshot.connectionState == ConnectionState.done) {
-                List docs = snapshot.data.documents;
-                // BlogList returns a ListView once connection and data is successful
-                return Container(
-                  child: BlogList(
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    List docs = snapshot.data.documents;
+                    // BlogList returns a ListView once connection and data is successful
+                    return Container(
+                      child: BlogList(
 
-                        items: List<ListItem>.generate(
-                            docs.length, (index) => BlogItem(docs[index]))),
-                );
-              }
+                            items: List<ListItem>.generate(
+                                docs.length, (index) => BlogItem(docs[index]))),
+                    );
+                  }
 
-              return Text("loading");
-            },
-          )),
+                  return Text("loading");
+                },
+              )),
+              Spacer(flex: 1,)
+            ],
+          ),
         ]),
       ),
     );
@@ -86,13 +95,15 @@ class BlogList extends StatelessWidget {
           final item = items[index];
 
           return Container(
-            color: Colors.red,
-            alignment: Alignment.topCenter,
             child: ListTile(
               //title: item.buildTitle(context),
               //subtitle: item.buildSubtitle(context),
               title: item.buildTitle(context),
               subtitle: item.buildSubtitle(context),
+              trailing: item.buildDate(context),
+              selected: true,
+              focusColor: Colors.grey,
+              onTap: () => print('Selected'),
             ),
           );
         });
@@ -106,6 +117,9 @@ abstract class ListItem {
 
   /// The subtitle line, if any, to show in a list item.
   Widget buildSubtitle(BuildContext context);
+
+  /// Return the date and (eventually) topics 
+  Widget buildDate(BuildContext context);
 }
 
 /// A ListItem that contains data to display a heading.
@@ -124,4 +138,11 @@ class BlogItem implements ListItem {
 
   Widget buildSubtitle(BuildContext context) => Text(blog.data['description'],
       style: Theme.of(context).textTheme.bodyText2);
+
+  Widget buildDate(BuildContext context) {
+    //final date= new DateTime.fromMillisecondsSinceEpoch(blog.data['date']);
+    String dateFormatted = new DateFormat('yyyy-MM-dd').format(blog.data['date'].toDate());
+    return Text(dateFormatted);
+  }
+
 }
