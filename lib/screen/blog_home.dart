@@ -29,8 +29,7 @@ class BlogHome extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(0),
-        child: Column(
-          children: [
+        child: Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,32 +45,37 @@ class BlogHome extends StatelessWidget {
           ),
           Row(
             children: [
-              Spacer(flex: 1,),
+              Spacer(
+                flex: 1,
+              ),
               Expanded(
-                flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 5,
+                  flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 5,
                   child: FutureBuilder<QuerySnapshot>(
-                future: getBlogs.orderBy('date', descending: true).getDocuments(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Something went wrong");
-                  }
+                    future: getBlogs
+                        .orderBy('date', descending: true)
+                        .getDocuments(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Something went wrong");
+                      }
 
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    List docs = snapshot.data.documents;
-                    // BlogList returns a ListView once connection and data is successful
-                    return Container(
-                      child: BlogList(
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        List docs = snapshot.data.documents;
+                        // BlogList returns a ListView once connection and data is successful
+                        return Container(
+                          child: BlogList(
+                              items: List<ListItem>.generate(docs.length,
+                                  (index) => BlogItem(docs[index]))),
+                        );
+                      }
 
-                            items: List<ListItem>.generate(
-                                docs.length, (index) => BlogItem(docs[index]))),
-                    );
-                  }
-
-                  return Text("loading");
-                },
-              )),
-              Spacer(flex: 1,)
+                      return Text("loading");
+                    },
+                  )),
+              Spacer(
+                flex: 1,
+              )
             ],
           ),
         ]),
@@ -102,8 +106,12 @@ class BlogList extends StatelessWidget {
               subtitle: item.buildSubtitle(context),
               trailing: item.buildDate(context),
               selected: true,
-              focusColor: Colors.grey,
-              onTap: () => print('Selected'),
+              focusColor: Colors.blueGrey,
+              hoverColor: Colors.grey,
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed('/blogdetail', arguments: item.getData());
+              },
             ),
           );
         });
@@ -118,8 +126,11 @@ abstract class ListItem {
   /// The subtitle line, if any, to show in a list item.
   Widget buildSubtitle(BuildContext context);
 
-  /// Return the date and (eventually) topics 
+  /// Return the date and (eventually) topics
   Widget buildDate(BuildContext context);
+
+  // Get the data of the blog
+  getData();
 }
 
 /// A ListItem that contains data to display a heading.
@@ -141,8 +152,12 @@ class BlogItem implements ListItem {
 
   Widget buildDate(BuildContext context) {
     //final date= new DateTime.fromMillisecondsSinceEpoch(blog.data['date']);
-    String dateFormatted = new DateFormat('yyyy-MM-dd').format(blog.data['date'].toDate());
+    String dateFormatted =
+        new DateFormat('yyyy-MM-dd').format(blog.data['date'].toDate());
     return Text(dateFormatted);
   }
 
+  getData() {
+    return blog.data;
+  }
 }

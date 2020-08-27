@@ -61,7 +61,7 @@ class SignInViewBody extends StatelessWidget {
         const Spacer(),
         ConstUtils().helperUtils.isMicrosoftHosted()
             ? const AnonymousSignInButton()
-            : null,
+            : Container(),
         GoogleSignInButton(),
         const Spacer(),
       ],
