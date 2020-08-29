@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 
 final appTheme = () => ThemeData(
-    primarySwatch: Colors.blue,
-    primaryColor: Colors.black,
-    scaffoldBackgroundColor: Colors.black,
+    brightness: Brightness.dark,
+    backgroundColor: Colors.black,
     textTheme: TextTheme(
         bodyText1:
             TextStyle(fontFamily: 'Oswald', fontSize: 24, color: Colors.white),

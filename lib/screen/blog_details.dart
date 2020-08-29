@@ -31,6 +31,9 @@ class BlogDetail extends StatelessWidget {
                 controller: controller,
                 selectable: true,
                 data: data['blogfile'],
+                styleSheet: MarkdownStyleSheet(
+                    blockquote: TextStyle(color: Colors.black),
+                    code: TextStyle(color: Colors.black)),
               ))
             ],
           ),

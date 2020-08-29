@@ -34,9 +34,10 @@ class WidgetUtils {
             },
             child: Text(buttontext,
                 style: TextStyle(
-                    fontSize: ResponsiveLayout.isSmallScreen(context) ? 18 : 20,
-                    fontFamily: ConstUtils().stringUtils.fontMenu,
-                    color: Colors.white))));
+                  fontSize: ResponsiveLayout.isSmallScreen(context) ? 18 : 20,
+                  //fontFamily: ConstUtils().stringUtils.fontMenu,
+                  //color: Colors.white
+                ))));
   }
 
   Widget menuText(String name, Color color, BuildContext context) {

@@ -14,7 +14,7 @@ class ComingSoon extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Conming Soon'),
+              Text('Coming Soon'),
             ],
           )
         ],

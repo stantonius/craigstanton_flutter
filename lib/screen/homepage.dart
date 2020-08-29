@@ -1,13 +1,11 @@
 import 'package:CraigStantonWeb/utils/widgets/image_carousel.dart';
 
-import './page_about.dart';
-import './page_contact.dart';
 import './page_home.dart';
-import './page_service.dart';
 import '../utils/ResponsiveLayout.dart';
 import '../utils/const_utils.dart';
 import '../utils/widget_utils.dart';
 import 'package:flutter/material.dart';
+import '../utils/widgets/circles.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   Map<dynamic, dynamic> menuList = ConstUtils().stringUtils.menuItems;
   //List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS", "BLOG2"];
   int clickPosition = 0;
-  Widget widgetbody = PageHome();
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +24,12 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
           preferredSize: ResponsiveLayout.isSmallScreen(context)
               ? Size.fromHeight(50.0)
-              : Size.fromHeight(0.0),
+              : Size.fromHeight(50.0),
           // here the desired height
           child: AppBar(
             centerTitle: true,
             elevation: 0.0,
-            backgroundColor: ConstUtils().colorUtils.blackBG_A,
+            backgroundColor: Colors.red,
             iconTheme: new IconThemeData(color: Colors.white),
 
             // ...
@@ -92,53 +89,7 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        Center(
-          child: ConstUtils().widgetUtils.circalContainer(
-              ConstUtils().colorUtils.blackBG_B,
-              ResponsiveLayout.isSmallScreen(context) ? 300 : 600),
-        ),
-        Center(
-          child: ConstUtils().widgetUtils.circalContainer(
-              ConstUtils().colorUtils.blackBG_C,
-              ResponsiveLayout.isSmallScreen(context) ? 250 : 500),
-        ),
-        Center(
-          child: ConstUtils().widgetUtils.circalContainer(
-              ConstUtils().colorUtils.blackBG_D,
-              ResponsiveLayout.isSmallScreen(context) ? 200 : 400),
-        ),
-        Align(
-          alignment: ResponsiveLayout.isSmallScreen(context)
-              ? Alignment.topCenter
-              : Alignment.topRight,
-          child: Container(
-              margin: EdgeInsets.only(
-                  top: 60,
-                  right: ResponsiveLayout.isSmallScreen(context) ? 0 : 100),
-              height: ResponsiveLayout.isSmallScreen(context) ? 200 : 400,
-              width: ResponsiveLayout.isSmallScreen(context) ? 200 : 400,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(390)),
-                  color: ConstUtils().colorUtils.blackCircal)),
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Container(
-              padding: EdgeInsets.all(
-                  ResponsiveLayout.isSmallScreen(context) ? 80 : 140),
-              transform: Matrix4.translationValues(
-                  ResponsiveLayout.isSmallScreen(context) ? -60.0 : -100.0,
-                  ResponsiveLayout.isSmallScreen(context) ? -60.0 : -100.0,
-                  0.0),
-              child: Image.asset(
-                ConstUtils().stringUtils.imgIcon,
-                width: ResponsiveLayout.isSmallScreen(context) ? 0 : 40,
-                height: ResponsiveLayout.isSmallScreen(context) ? 0 : 40,
-              ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(390)),
-                  color: ConstUtils().colorUtils.blackCircal)),
-        ),
+        BackgroundCircles(),
         Visibility(
           visible: ResponsiveLayout.isSmallScreen(context) ? false : true,
           child: Stack(
@@ -174,7 +125,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
         Align(
           alignment: ResponsiveLayout.isSmallScreen(context)
               ? Alignment.topCenter
@@ -188,17 +138,11 @@ class _HomePageState extends State<HomePage> {
                 top: 100,
               ),
               child: ImageCarousel(),
-              /*
-              Image.asset(
-                ConstUtils().stringUtils.imgProfile,
-              ),
-              */
               height: ResponsiveLayout.isSmallScreen(context) ? 300 : 600,
               width: ResponsiveLayout.isSmallScreen(context) ? 300 : 600,
             ),
           ),
         ),
-
         Align(
           alignment: ResponsiveLayout.isSmallScreen(context)
               ? Alignment.bottomCenter
@@ -209,27 +153,10 @@ class _HomePageState extends State<HomePage> {
                 left: ResponsiveLayout.isSmallScreen(context) ? 0 : 250,
                 top: ResponsiveLayout.isSmallScreen(context) ? 100 : 160),
             child: SingleChildScrollView(
-                scrollDirection: Axis.vertical, child: bodyPage(clickPosition)),
+                scrollDirection: Axis.vertical, child: PageHome()),
           ),
         )
-        //
       ],
     );
-  }
-
-  Widget bodyPage(int clickPosition) {
-    setState(() {
-      if (clickPosition == 0) {
-        widgetbody = PageHome();
-      } else if (clickPosition == 1) {
-        widgetbody = PageAbout();
-      } else if (clickPosition == 2) {
-        widgetbody = PageService();
-      } else if (clickPosition == 3) {
-        widgetbody = PageContact();
-      }
-    });
-
-    return widgetbody;
   }
 }
