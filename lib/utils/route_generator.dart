@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../screen/homepage.dart';
-import '../screen/admin.dart';
-import '../screen/blog_home.dart';
-import '../screen/coming_soon.dart';
-import '../screen/blog_details.dart';
+import '../screen/homepage2.dart';
+import '../old_screen/admin.dart';
+import '../screen/coming_soon2.dart';
+import '../screen/blog_home2.dart';
+import '../screen/blog_detail_screen.dart';
 
 /// Some notes on this approach:
 /// Tutorial from ResoCoder is here:
@@ -20,7 +20,7 @@ class RouteGenerator {
     switch (settings.name) {
       case ('/'):
         return MaterialPageRoute(
-            builder: (_) => HomePage(),
+            builder: (_) => HomePage2(),
             settings: RouteSettings(name: settings.name));
       case ('/nothing'):
         return MaterialPageRoute(
@@ -28,19 +28,19 @@ class RouteGenerator {
             settings: RouteSettings(name: settings.name));
       case ('/blog'):
         return MaterialPageRoute(
-            builder: (_) => BlogHome(),
+            builder: (_) => BlogHome2(),
             settings: RouteSettings(name: settings.name));
       case ('/blogdetail'):
         return MaterialPageRoute(
-            builder: (_) => BlogDetail(data: args),
+            builder: (_) => BlogDetailHome(data: args),
             settings: RouteSettings(name: settings.name));
       case ('/about'):
         return MaterialPageRoute(
-            builder: (_) => ComingSoon(),
+            builder: (_) => ComingSoon2(),
             settings: RouteSettings(name: settings.name));
       case ('/apps'):
         return MaterialPageRoute(
-            builder: (_) => ComingSoon(),
+            builder: (_) => ComingSoon2(),
             settings: RouteSettings(name: settings.name));
       default:
         return _errorRoute();

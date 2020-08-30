@@ -1,6 +1,6 @@
 import 'package:CraigStantonWeb/utils/widgets/image_carousel.dart';
 
-import './page_home.dart';
+import '../utils/views/home_view.dart';
 import '../utils/ResponsiveLayout.dart';
 import '../utils/const_utils.dart';
 import '../utils/widget_utils.dart';
@@ -14,17 +14,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Map<dynamic, dynamic> menuList = ConstUtils().stringUtils.menuItems;
-  //List<String> menuList = ["HOME", "ABOUT", "BLOG", "APPS", "BLOG2"];
   int clickPosition = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ConstUtils().colorUtils.blackBG_A,
       appBar: PreferredSize(
           preferredSize: ResponsiveLayout.isSmallScreen(context)
               ? Size.fromHeight(50.0)
-              : Size.fromHeight(50.0),
+              : Size.fromHeight(0.0),
           // here the desired height
           child: AppBar(
             centerTitle: true,
@@ -44,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(top: 30),
                         child: ConstUtils().widgetUtils.headingText(
                             name: ConstUtils().stringUtils.fullname,
-                            color: Colors.yellow,
+                            color: Colors.white,
                             context: context,
                             textSizeLarge: 32,
                             textSizeMedium: 22,
@@ -89,7 +87,7 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        BackgroundCircles(),
+        //BackgroundCircles(),
         Visibility(
           visible: ResponsiveLayout.isSmallScreen(context) ? false : true,
           child: Stack(

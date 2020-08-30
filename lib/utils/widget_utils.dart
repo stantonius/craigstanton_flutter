@@ -46,9 +46,10 @@ class WidgetUtils {
       child: Text(
         name,
         style: TextStyle(
-            color: color,
-            fontSize: ResponsiveLayout.isSmallScreen(context) ? 18 : 20,
-            fontFamily: ConstUtils().stringUtils.fontMenu),
+          color: color,
+          fontSize: ResponsiveLayout.isSmallScreen(context) ? 18 : 20,
+          //fontFamily: ConstUtils().stringUtils.fontMenu
+        ),
       ),
     );
   }
@@ -72,9 +73,10 @@ class WidgetUtils {
     return Text(
       name,
       style: TextStyle(
-          color: color,
-          fontSize: textSize,
-          fontFamily: ConstUtils().stringUtils.fontMenu),
+        color: color,
+        fontSize: textSize,
+        //fontFamily: ConstUtils().stringUtils.fontMenu
+      ),
     );
   }
 
@@ -100,9 +102,10 @@ class WidgetUtils {
           ? TextAlign.center
           : TextAlign.start,
       style: TextStyle(
-          color: color,
-          fontSize: textSize,
-          fontFamily: ConstUtils().stringUtils.fontMenu),
+        color: color,
+        fontSize: textSize,
+        //fontFamily: ConstUtils().stringUtils.fontMenu
+      ),
     );
   }
 
@@ -125,10 +128,11 @@ class WidgetUtils {
     return Text(
       name,
       style: TextStyle(
-          color: color,
-          fontSize: textSize,
-          fontWeight: FontWeight.w700,
-          fontFamily: ConstUtils().stringUtils.fontHeading),
+        color: color,
+        fontSize: textSize,
+        fontWeight: FontWeight.w700,
+        //fontFamily: ConstUtils().stringUtils.fontHeading
+      ),
     );
   }
 
@@ -136,10 +140,11 @@ class WidgetUtils {
     return Text(
       name,
       style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: FontWeight.w700,
-          fontFamily: ConstUtils().stringUtils.fontContent),
+        color: color,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w700,
+        //fontFamily: ConstUtils().stringUtils.fontContent
+      ),
     );
   }
 
@@ -163,10 +168,11 @@ class WidgetUtils {
       name,
       textAlign: TextAlign.center,
       style: TextStyle(
-          color: color,
-          fontSize: textSize,
-          fontWeight: FontWeight.w700,
-          fontFamily: ConstUtils().stringUtils.fontContent),
+        color: color,
+        fontSize: textSize,
+        fontWeight: FontWeight.w700,
+        //fontFamily: ConstUtils().stringUtils.fontContent
+      ),
     );
   }
 
@@ -175,10 +181,11 @@ class WidgetUtils {
       name,
       textAlign: TextAlign.center,
       style: TextStyle(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: FontWeight.w700,
-          fontFamily: ConstUtils().stringUtils.fontHeading),
+        color: color,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w700,
+        //fontFamily: ConstUtils().stringUtils.fontHeading
+      ),
     );
   }
 
@@ -188,31 +195,6 @@ class WidgetUtils {
       onPressed: () => {print('Pressed')},
       child: Text(buttonName),
     );
-
-    /*
-    return Card(
-      elevation: 8,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(30))),
-      color: Colors.yellow,
-      child: Padding(
-          padding: EdgeInsets.only(
-              left: ResponsiveLayout.isSmallScreen(context) ? 16 : 20,
-              right: ResponsiveLayout.isSmallScreen(context) ? 16 : 20,
-              top: ResponsiveLayout.isSmallScreen(context) ? 8 : 18,
-              bottom: ResponsiveLayout.isSmallScreen(context) ? 8 : 10),
-          child: Center(
-            child: Text(
-              buttonName,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: ConstUtils().colorUtils.blackCircal,
-                  fontSize: ResponsiveLayout.isSmallScreen(context) ? 14 : 20,
-                  fontFamily: ConstUtils().stringUtils.fontMenu),
-            ),
-          )),
-    );
-    */
   }
 
   Widget lineHorizontal({double height, Color color}) {
@@ -228,5 +210,20 @@ class WidgetUtils {
       color: color,
       width: width,
     );
+  }
+
+  Widget centreTextPlaceholder(String message) {
+    return Container(
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(message),
+          ],
+        )
+      ],
+    ));
   }
 }
