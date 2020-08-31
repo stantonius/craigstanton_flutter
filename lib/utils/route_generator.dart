@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screen/homepage2.dart';
-import '../old_screen/admin.dart';
+//import '../old_screen/admin.dart';
+import '../screen/blog_admin_screen.dart';
 import '../screen/coming_soon2.dart';
 import '../screen/blog_home2.dart';
 import '../screen/blog_detail_screen.dart';
@@ -24,7 +25,7 @@ class RouteGenerator {
             settings: RouteSettings(name: settings.name));
       case ('/nothing'):
         return MaterialPageRoute(
-            builder: (_) => Admin(),
+            builder: (_) => BlogAdminScreen(),
             settings: RouteSettings(name: settings.name));
       case ('/blog'):
         return MaterialPageRoute(
