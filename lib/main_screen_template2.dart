@@ -3,6 +3,7 @@ import 'utils/const_utils.dart';
 import 'utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'utils/widgets/circles.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class MainPageTemplate extends StatefulWidget {
   final Widget bodyWidget;
@@ -16,6 +17,8 @@ class _MainPageTemplate extends State<MainPageTemplate>
     with AutomaticKeepAliveClientMixin {
   Map<dynamic, dynamic> menuList = ConstUtils().stringUtils.menuItems;
   int clickPosition = 0;
+
+  String _animationName = "craig_white";
 
   @override
   bool get wantKeepAlive => true;
@@ -117,6 +120,20 @@ class _MainPageTemplate extends State<MainPageTemplate>
                               },
                             );
                           }),
+                    )),
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      padding: EdgeInsets.only(top: 20),
+                      height: 150,
+                      width: 150,
+                      child: new FlareActor(
+                        "animations/CRAIG_white.flr",
+                        alignment: Alignment.center,
+                        fit: BoxFit.contain,
+                        animation:
+                            _animationName, // CRITICAL IT IS SAME NAME AS ANIMATION IN RIVE
+                      ),
                     ))
               ],
             ),
