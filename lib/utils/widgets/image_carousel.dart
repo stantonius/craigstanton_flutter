@@ -2,10 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imgList = [
-  './images/NZ.jpg',
-  './images/Cambodia.jpg',
-  './images/NZ2.jpg',
-  './images/Scotland.jpg'
+  'assets/images/NZ.jpg',
+  'assets/images/Cambodia.jpg',
+  'assets/images/NZ2.jpg',
+  'assets/images/Scotland.jpg'
 ];
 
 class ImageCarousel extends StatelessWidget {
@@ -24,7 +24,7 @@ class ImageCarousel extends StatelessWidget {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                  child: Center(child: Image.asset(item, fit: BoxFit.cover)));
+                  child: Center(child: Image.network(item, fit: BoxFit.cover)));
             },
           );
         }).toList(),
