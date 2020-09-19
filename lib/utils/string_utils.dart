@@ -14,8 +14,8 @@ class StringUtils {
   String contactTitle = 'Get In Touch';
 
   /// About
-  String aboutMeTitle;
-  String aboutMeContent;
+  String aboutMeTitle = "A little about me";
+  String aboutMeContent = "I am a self-taught developer who is and extremely passionate about technology - specifically AI, cloud computing, and blockchain. I have an MSc. in Neurophysiology from McGill University, and a BSc. in Biochemistry from the University of Ottawa.";
   String aboutTravelTitle = "From Canada to the UK";
   String aboutTravelContent =
       "Over 3 years ago I moved with my wife Lydia to London from Ottawa. We love London life and travelling around the UK and Europe (in normal times) - we have visited over 30 countries (and counting).";

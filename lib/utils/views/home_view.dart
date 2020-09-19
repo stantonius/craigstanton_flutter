@@ -37,8 +37,12 @@ class _PageHomeState extends State<PageHome> {
                 top: 100,
               ),
               child: ImageCarousel(),
-              height: ResponsiveLayout.isSmallScreen(context) ? 300 : 600,
-              width: ResponsiveLayout.isSmallScreen(context) ? 300 : 600,
+              height: ResponsiveLayout.isSmallScreen(context)
+                  ? 300
+                  : ResponsiveLayout.isXLargeScreen(context) ? 1000 : 600,
+              width: ResponsiveLayout.isSmallScreen(context)
+                  ? 300
+                  : ResponsiveLayout.isXLargeScreen(context) ? 1000 : 600,
             ),
           ),
         ),

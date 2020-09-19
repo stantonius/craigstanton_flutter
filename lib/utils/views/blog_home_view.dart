@@ -2,6 +2,7 @@ import 'package:CraigStantonWeb/utils/ResponsiveLayout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../const_utils.dart';
 
 /*
 Note on layout building with a ListView widget. There is an issue when nesting
@@ -24,7 +25,9 @@ class BlogHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference getBlogs = Firestore.instance.collection('blog_dev');
+    CollectionReference getBlogs = ConstUtils().helperUtils.isMicrosoftHosted()
+        ? Firestore.instance.collection('blog_dev')
+        : Firestore.instance.collection('blog');
 
     return Padding(
       padding: EdgeInsets.all(0),

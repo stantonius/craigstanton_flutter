@@ -18,6 +18,61 @@ class _AboutViewState extends State<AboutView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Spacer(
+            flex: 1,
+          ),
+          Expanded(
+            flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 4,
+            child: Card(
+              elevation: 1,
+              color: Colors.grey,
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    fit: FlexFit.tight,
+                    child: MouseRegion(
+                        onHover: (event) {
+                          setState(() {
+                            winkingCraig = false;
+                          });
+                        },
+                        onExit: (event) {
+                          setState(() {
+                            winkingCraig = true;
+                          });
+                        },
+                        child: Container(
+                            alignment: Alignment.topCenter,
+                            padding: EdgeInsets.only(top: 20),
+                            height: 150,
+                            width: 150,
+                            child: FlareActor(
+                              "animations/Craig_avatar.flr",
+                              alignment: Alignment.center,
+                              fit: BoxFit.contain,
+                              isPaused: winkingCraig,
+                              animation:
+                                  "craig_wink", // CRITICAL IT IS SAME NAME AS ANIMATION IN RIVE
+                            ))),
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                          child: ListTile(
+                              title:
+                                  Text(ConstUtils().stringUtils.aboutMeTitle),
+                              subtitle: Text(
+                                  ConstUtils().stringUtils.aboutMeContent))))
+                ],
+              ),
+            ),
+          ),
+          Spacer(
+            flex: 1,
+          )
+        ]),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Spacer(
             flex: 1,
@@ -73,61 +128,6 @@ class _AboutViewState extends State<AboutView> {
             flex: 1,
           )
         ]),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Spacer(
-            flex: 1,
-          ),
-          Expanded(
-            flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 4,
-            child: Card(
-              elevation: 1,
-              color: Colors.grey,
-              child: Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.tight,
-                    child: MouseRegion(
-                        onHover: (event) {
-                          setState(() {
-                            winkingCraig = false;
-                          });
-                        },
-                        onExit: (event) {
-                          setState(() {
-                            winkingCraig = true;
-                          });
-                        },
-                        child: Container(
-                            alignment: Alignment.topCenter,
-                            padding: EdgeInsets.only(top: 20),
-                            height: 150,
-                            width: 150,
-                            child: FlareActor(
-                              "animations/Craig_avatar.flr",
-                              alignment: Alignment.center,
-                              fit: BoxFit.contain,
-                              isPaused: winkingCraig,
-                              animation:
-                                  "craig_wink", // CRITICAL IT IS SAME NAME AS ANIMATION IN RIVE
-                            ))),
-                  ),
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                          child: ListTile(
-                        title: Text(ConstUtils().stringUtils.aboutTravelTitle),
-                        subtitle:
-                            Text(ConstUtils().stringUtils.aboutTravelContent),
-                      )))
-                ],
-              ),
-            ),
-          ),
-          Spacer(
-            flex: 1,
-          )
-        ])
       ],
     );
   }
