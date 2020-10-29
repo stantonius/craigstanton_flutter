@@ -13,3 +13,6 @@ File upload:
 
 Deploying to Firebase:
 * Use this command `firebase deploy --only hosting:craigstanton-3b97f`
+
+Running Flutter web in VSCode online
+`flutter run --release -d web-server --web-hostname=0.0.0.0 --web-port=3000` 
