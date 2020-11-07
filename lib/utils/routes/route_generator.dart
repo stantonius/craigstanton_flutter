@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../screen/homepage2.dart';
-import '../screen/blog_admin_screen.dart';
-import '../screen/coming_soon2.dart';
-import '../screen/blog_home2.dart';
-import '../screen/blog_detail_screen.dart';
-import '../screen/about_screen.dart';
+import '../../screen/homepage2.dart';
+import '../../screen/blog_admin_screen.dart';
+import '../../screen/coming_soon2.dart';
+import '../../screen/blog_home2.dart';
+import '../../screen/blog_detail_screen.dart';
+import '../../screen/about_screen.dart';
 
 /// Some notes on this approach:
 /// Tutorial from ResoCoder is here:

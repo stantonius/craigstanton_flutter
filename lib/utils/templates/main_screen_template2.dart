@@ -1,8 +1,8 @@
-import 'utils/ResponsiveLayout.dart';
-import 'utils/const_utils.dart';
-import 'utils/widget_utils.dart';
+import '../layouts/ResponsiveLayout.dart';
+import '../models/const_utils.dart';
+import '../models/constants/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'utils/widgets/circles.dart';
+import '../widgets/circles.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 class MainPageTemplate extends StatefulWidget {

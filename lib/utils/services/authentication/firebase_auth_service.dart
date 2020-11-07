@@ -1,17 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
+/// Importing firebase_auth as auth (therefore all classes are auth.Class) to avoid
+/// naming conflict. This was Google's recommendation
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../models/user.dart';
 
 class FirebaseAuthService {
-  final FirebaseAuth _firebaseAuth;
+  final auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
-  FirebaseAuthService({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+  FirebaseAuthService(
+      {auth.FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+      : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance,
         _googleSignIn = googleSignin ?? GoogleSignIn();
 
-  User _userFromFirebase(FirebaseUser user) {
+  User _userFromFirebase(auth.User user) {
     if (user == null) {
       return null;
     }
@@ -19,12 +22,12 @@ class FirebaseAuthService {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
-      photoUrl: user.photoUrl,
+      photoUrl: user.photoURL,
     );
   }
 
   Stream<User> get onAuthStateChanged {
-    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+    return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
   Future<User> signInAnonymously() async {
@@ -35,7 +38,7 @@ class FirebaseAuthService {
   Future<User> signInWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
     final googleAuth = await googleUser.authentication;
-    final credential = GoogleAuthProvider.getCredential(
+    final credential = auth.GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
@@ -48,7 +51,7 @@ class FirebaseAuthService {
   }
 
   Future<User> currentUser() async {
-    final user = await _firebaseAuth.currentUser();
+    final user = await _firebaseAuth.currentUser;
     return _userFromFirebase(user);
   }
 }

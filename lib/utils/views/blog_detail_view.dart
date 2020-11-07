@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:CraigStantonWeb/utils/ResponsiveLayout.dart';
+import 'package:markdown_widget/markdown_widget.dart';
+import 'package:markdown_widget/config/highlight_themes.dart' as theme;
+import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
 
 class BlogDetail extends StatelessWidget {
   final Map data;
@@ -18,23 +19,28 @@ class BlogDetail extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  data['title'],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    data['title'],
+                  ),
+                ],
+              ),
             ),
             Expanded(
-                child: Markdown(
-              controller: controller,
-              selectable: true,
+                child: MarkdownWidget(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+              //controller: controller,
               data: data['blogfile'],
-              styleSheet: MarkdownStyleSheet(
-                  blockquote: TextStyle(color: Colors.black),
-                  code: TextStyle(color: Colors.black)),
+              styleConfig: StyleConfig(
+                  markdownTheme: MarkdownTheme.lightTheme,
+                  preConfig: PreConfig(
+                      autoDetectionLanguage: true,
+                      theme: theme.githubGistTheme)),
             ))
           ],
         ),

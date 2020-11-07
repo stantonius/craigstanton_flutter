@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../ResponsiveLayout.dart';
+import '../layouts/ResponsiveLayout.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import '../const_utils.dart';
+import '../models/const_utils.dart';
 
 class AboutView extends StatefulWidget {
   @override

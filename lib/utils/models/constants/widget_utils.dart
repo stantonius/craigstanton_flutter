@@ -1,5 +1,5 @@
-import '../utils/ResponsiveLayout.dart';
-import '../utils/const_utils.dart';
+import '../../layouts/ResponsiveLayout.dart';
+import '../const_utils.dart';
 import 'package:flutter/material.dart';
 
 class WidgetUtils {

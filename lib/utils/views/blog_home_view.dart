@@ -1,8 +1,8 @@
-import 'package:CraigStantonWeb/utils/ResponsiveLayout.dart';
+import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../const_utils.dart';
+import '../models/const_utils.dart';
 
 /*
 Note on layout building with a ListView widget. There is an issue when nesting
@@ -26,8 +26,8 @@ class BlogHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference getBlogs = ConstUtils().helperUtils.isMicrosoftHosted()
-        ? Firestore.instance.collection('blog_dev')
-        : Firestore.instance.collection('blog');
+        ? FirebaseFirestore.instance.collection('blog_dev')
+        : FirebaseFirestore.instance.collection('blog');
 
     return Padding(
       padding: EdgeInsets.all(0),
@@ -44,9 +44,7 @@ class BlogHome extends StatelessWidget {
               Expanded(
                   flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 5,
                   child: FutureBuilder<QuerySnapshot>(
-                    future: getBlogs
-                        .orderBy('date', descending: true)
-                        .getDocuments(),
+                    future: getBlogs.orderBy('date', descending: true).get(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
@@ -54,7 +52,7 @@ class BlogHome extends StatelessWidget {
                       }
 
                       if (snapshot.connectionState == ConnectionState.done) {
-                        List docs = snapshot.data.documents;
+                        List docs = snapshot.data.docs;
                         // BlogList returns a ListView once connection and data is successful
                         return Container(
                           child: BlogList(
@@ -135,18 +133,18 @@ class BlogItem implements ListItem {
 
   Widget buildTitle(BuildContext context) {
     return Text(
-      blog.data['title'],
+      blog.data()['title'],
       style: Theme.of(context).textTheme.bodyText1,
     );
   }
 
-  Widget buildSubtitle(BuildContext context) => Text(blog.data['description'],
+  Widget buildSubtitle(BuildContext context) => Text(blog.data()['description'],
       style: Theme.of(context).textTheme.bodyText2);
 
   Widget buildDate(BuildContext context) {
     //final date= new DateTime.fromMillisecondsSinceEpoch(blog.data['date']);
     String dateFormatted =
-        new DateFormat('yyyy-MM-dd').format(blog.data['date'].toDate());
+        new DateFormat('yyyy-MM-dd').format(blog.data()['date'].toDate());
     return Text(dateFormatted);
   }
 

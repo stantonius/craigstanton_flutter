@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Import main template and homepage class
-import '../main_screen_template2.dart';
+import '../utils/templates/main_screen_template2.dart';
 import '../utils/views/home_view.dart';
 
 class HomePage2 extends StatelessWidget {
