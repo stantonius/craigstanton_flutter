@@ -7,7 +7,7 @@ import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import '../ResponsiveLayout.dart';
+import '../layouts/ResponsiveLayout.dart';
 
 class MainForm extends StatelessWidget {
   @override
@@ -68,7 +68,7 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
   Widget build(BuildContext context) {
     return FormBuilder(
         key: _formKey,
-        autovalidate: true,
+        autovalidateMode: AutovalidateMode.always,
         child: Column(children: [
           Padding(
             padding: ResponsiveLayout.isSmallScreen(context)

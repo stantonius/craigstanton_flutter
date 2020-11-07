@@ -1,4 +1,4 @@
-import '../utils/const_utils.dart';
+import '../const_utils.dart';
 import 'package:flutter/material.dart';
 
 class StyleUtils {

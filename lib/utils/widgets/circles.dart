@@ -2,8 +2,8 @@
 // Allows to add/remove easily
 
 import 'package:flutter/material.dart';
-import '../ResponsiveLayout.dart';
-import '../const_utils.dart';
+import '../layouts/ResponsiveLayout.dart';
+import '../models/const_utils.dart';
 
 class BackgroundCircles extends StatelessWidget {
   const BackgroundCircles({Key key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'dart:js' as js;
 
-import '../ResponsiveLayout.dart';
-import '../const_utils.dart';
+import '../layouts/ResponsiveLayout.dart';
+import '../models/const_utils.dart';
 import '../widgets/image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

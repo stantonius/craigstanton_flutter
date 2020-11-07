@@ -7,7 +7,12 @@ class HelperUtils {
     final String version = _platform.operatingSystem.toString();
     if (version == 'OperatingSystem.windows') {
       return true;
-    } else {
+    } else if (version == 'OperatingSystem.android') {
+      return true;
+    } else if (version == 'OperatingSystem.unknown') {
+      return true;
+    }
+    {
       return false;
     }
   }

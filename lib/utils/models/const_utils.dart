@@ -1,8 +1,8 @@
-import '../utils/colors_utils.dart';
-import '../utils/string_utils.dart';
-import '../utils/style_utils.dart';
-import '../utils/widget_utils.dart';
-import 'helper_utils.dart';
+import 'constants/colors_utils.dart';
+import 'constants/string_utils.dart';
+import 'constants/style_utils.dart';
+import 'constants/widget_utils.dart';
+import 'constants/helper_utils.dart';
 
 class ConstUtils {
   ColorUtils colorUtils = new ColorUtils();
