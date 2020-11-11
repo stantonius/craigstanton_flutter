@@ -1,34 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/sign_in_view_model.dart';
 import '../widgets/anonymous_sign_in_button.dart';
 import '../widgets/google_sign_in_button.dart';
 import '../models/const_utils.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({Key key}) : super(key: key);
-
+class SignInView extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SignInViewModel>(
-      create: (_) => SignInViewModel(context.read),
-      builder: (_, child) {
-        return const Scaffold(
-          body: SignInViewBody._(),
-        );
-      },
-    );
-  }
-}
-
-class SignInViewBody extends StatelessWidget {
-  const SignInViewBody._({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final isLoading =
-        context.select((SignInViewModel viewModel) => viewModel.isLoading);
+    final isLoading = useProvider(isLoadingStateNotifier).isLoading;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -42,8 +24,8 @@ class SignInViewBody extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: isLoading ? _loadingIndicator() : _signInButtons(context),
-          ),
+              child: isLoading ? _loadingIndicator() : _signInButtons(context)),
+          //child: _signInButtons(context)),
         ],
       ),
     );

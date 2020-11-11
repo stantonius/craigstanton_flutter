@@ -1,28 +1,27 @@
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:CraigStantonWeb/utils/services/authentication/firebase_auth_service.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignInViewModel extends ChangeNotifier {
-  SignInViewModel(this.locator);
+final isLoadingStateNotifier =
+    StateNotifierProvider((_) => SignInViewModel(false));
 
-  final Locator locator;
+class SignInViewModel extends StateNotifier {
+  SignInViewModel(state) : super(state);
 
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   Future<void> signInAnonymously() async {
     _setLoading();
-    await locator<FirebaseAuthService>().signInAnonymously();
+    await FirebaseAuthService().signInAnonymously();
     _setNotLoading();
   }
 
   void _setLoading() {
     _isLoading = true;
-    notifyListeners();
   }
 
   void _setNotLoading() {
     _isLoading = false;
-    notifyListeners();
   }
 }

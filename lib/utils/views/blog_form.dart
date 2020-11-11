@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:file_picker_cross/file_picker_cross.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../main.dart';
 import '../layouts/ResponsiveLayout.dart';
 
 class MainForm extends StatelessWidget {
@@ -26,7 +27,7 @@ class MainForm extends StatelessWidget {
             onPressed: () {
               print('Context:');
               //context.signOut();
-              context.read<FirebaseAuthService>().signOut();
+              context.read(appAuthProvider).signOut();
               //print(context.read<User>());
             },
             color: Colors.red,
@@ -142,10 +143,10 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
                     onPressed: () {
                       if (_formKey.currentState.saveAndValidate()) {
                         //_formKey.currentState.setAttributeValue("heello", "sup");
-                        Firestore.instance
+                        FirebaseFirestore.instance
                             .collection('blog_dev')
-                            .document()
-                            .setData({
+                            .doc()
+                            .set({
                           'blogfile': _formKey.currentState.value['blogfile'],
                           'title': _formKey.currentState.value['title'],
                           'description':

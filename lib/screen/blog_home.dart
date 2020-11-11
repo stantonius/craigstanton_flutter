@@ -1,8 +1,20 @@
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
+import 'package:CraigStantonWeb/utils/models/const_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/const_utils.dart';
+
+// Import main template and homepage class
+import '../utils/templates/main_screen_template2.dart';
+
+class BlogHomeScreen extends StatelessWidget {
+  const BlogHomeScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MainPageTemplate(BlogHome());
+  }
+}
 
 /*
 Note on layout building with a ListView widget. There is an issue when nesting
@@ -20,6 +32,7 @@ wrapping it in Padding widget)
 // Query has connected and returned data
 // BlogPage is a copy of the example in FlutterFire ref with the excption of
 // of BlogList widget and returning QuerySnapshot in the Future builder
+
 class BlogHome extends StatelessWidget {
   const BlogHome({Key key}) : super(key: key);
 

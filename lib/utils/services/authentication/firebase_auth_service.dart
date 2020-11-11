@@ -1,11 +1,13 @@
 /// Importing firebase_auth as auth (therefore all classes are auth.Class) to avoid
 /// naming conflict. This was Google's recommendation
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/user.dart';
 
-class FirebaseAuthService {
+class FirebaseAuthService extends ChangeNotifier {
   final auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
@@ -27,11 +29,13 @@ class FirebaseAuthService {
   }
 
   Stream<User> get onAuthStateChanged {
+    notifyListeners();
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
   Future<User> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
+    notifyListeners();
     return _userFromFirebase(authResult.user);
   }
 
@@ -43,15 +47,23 @@ class FirebaseAuthService {
       idToken: googleAuth.idToken,
     );
     final authResult = await _firebaseAuth.signInWithCredential(credential);
+    final user = _userFromFirebase(authResult.user);
+    print('User from firebase is $user');
+    notifyListeners();
     return _userFromFirebase(authResult.user);
   }
 
   Future<void> signOut() async {
-    return _firebaseAuth.signOut();
+    final signedOut = await _firebaseAuth.signOut();
+    notifyListeners();
+    return signedOut;
   }
 
-  Future<User> currentUser() async {
+  Future<User> get currentUser async {
     final user = await _firebaseAuth.currentUser;
+    if (user == null) {
+      return null;
+    }
     return _userFromFirebase(user);
   }
 }
