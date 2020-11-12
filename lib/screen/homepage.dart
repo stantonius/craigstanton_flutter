@@ -1,10 +1,21 @@
-import 'dart:js' as js;
-
-import '../layouts/ResponsiveLayout.dart';
-import '../models/const_utils.dart';
-import '../widgets/image_carousel.dart';
+import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
+import 'package:CraigStantonWeb/utils/models/const_utils.dart';
+import 'package:CraigStantonWeb/utils/widgets/image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:js' as js;
+
+// Import main template and homepage class
+import '../utils/templates/main_screen_template.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MainPageTemplate(PageHome());
+  }
+}
 
 class PageHome extends StatefulWidget {
   @override
@@ -30,7 +41,9 @@ class _PageHomeState extends State<PageHome> {
               : Alignment.topRight,
           child: Visibility(
             visible: ResponsiveLayout.isSmallScreen(context)
-                ? clickPosition != 0 ? false : true
+                ? clickPosition != 0
+                    ? false
+                    : true
                 : true,
             child: Container(
               margin: EdgeInsets.only(
@@ -39,10 +52,14 @@ class _PageHomeState extends State<PageHome> {
               child: ImageCarousel(),
               height: ResponsiveLayout.isSmallScreen(context)
                   ? 300
-                  : ResponsiveLayout.isXLargeScreen(context) ? 1000 : 600,
+                  : ResponsiveLayout.isXLargeScreen(context)
+                      ? 1000
+                      : 600,
               width: ResponsiveLayout.isSmallScreen(context)
                   ? 300
-                  : ResponsiveLayout.isXLargeScreen(context) ? 1000 : 600,
+                  : ResponsiveLayout.isXLargeScreen(context)
+                      ? 1000
+                      : 600,
             ),
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:CraigStantonWeb/utils/models/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AnonymousSignInButton extends StatelessWidget {
   const AnonymousSignInButton({Key key}) : super(key: key);
@@ -10,7 +10,7 @@ class AnonymousSignInButton extends StatelessWidget {
     return Container(
         child: RaisedButton(
             onPressed: () {
-              context.read<SignInViewModel>().signInAnonymously();
+              context.read(isLoadingStateNotifier).signInAnonymously();
             },
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             color: Colors.red[900],
