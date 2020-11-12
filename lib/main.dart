@@ -1,5 +1,7 @@
+import 'package:CraigStantonWeb/utils/models/user.dart';
 import 'package:CraigStantonWeb/utils/services/authentication/firebase_auth_service.dart';
 import 'package:CraigStantonWeb/utils/services/riverpod/riverpod.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'utils/theme/theme.dart';
 import 'utils/routes/route_generator.dart';
@@ -8,11 +10,14 @@ import 'package:flutter/material.dart';
 /// TODO
 /// Move initial state to separate folder once working
 final appAuthProvider = ChangeNotifierProvider((ref) => FirebaseAuthService());
+final appAuthStateChangesProvider =
+    StreamProvider((ref) => ref.watch(appAuthProvider).onAuthStateChanged);
 
 void main() async {
-  /// Below might be needed for apps. Firebase,initialiseApp() currently in index.html
-  ///await Firebase.initializeApp();
-  /// Also placeholder for Google crashlytics
+  /// Firebase,initialiseApp() currently in index.html also for web app
+  await Firebase.initializeApp();
+
+  /// Placeholder for Google crashlytics
   runApp(ProviderScope(
     observers: [
       Logger(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../screen/homepage.dart';
 import '../../screen/blog_admin_screen.dart';
-import '../../screen/coming_soon2.dart';
+import '../../screen/coming_soon.dart';
 import '../../screen/blog_home.dart';
 import '../../screen/blog_detail_screen.dart';
 import '../../screen/about_screen.dart';
@@ -41,7 +41,7 @@ class RouteGenerator {
             settings: RouteSettings(name: settings.name));
       case ('/apps'):
         return MaterialPageRoute(
-            builder: (_) => ComingSoon2(),
+            builder: (_) => ComingSoon(),
             settings: RouteSettings(name: settings.name));
       default:
         return _errorRoute();

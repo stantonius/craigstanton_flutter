@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/user.dart';
 
@@ -28,14 +27,14 @@ class FirebaseAuthService extends ChangeNotifier {
     );
   }
 
-  Stream<User> get onAuthStateChanged {
+  Stream get onAuthStateChanged {
     notifyListeners();
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
   Future<User> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
-    notifyListeners();
+    //notifyListeners();
     return _userFromFirebase(authResult.user);
   }
 
@@ -55,15 +54,12 @@ class FirebaseAuthService extends ChangeNotifier {
 
   Future<void> signOut() async {
     final signedOut = await _firebaseAuth.signOut();
-    notifyListeners();
+    //notifyListeners();
     return signedOut;
   }
 
   Future<User> get currentUser async {
     final user = await _firebaseAuth.currentUser;
-    if (user == null) {
-      return null;
-    }
     return _userFromFirebase(user);
   }
 }

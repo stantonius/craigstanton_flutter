@@ -6,7 +6,7 @@ import '../widgets/circles.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 class MainPageTemplate extends StatefulWidget {
-  final Widget bodyWidget;
+  final bodyWidget;
   const MainPageTemplate(this.bodyWidget);
 
   @override

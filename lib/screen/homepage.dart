@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:js' as js;
 
 // Import main template and homepage class
-import '../utils/templates/main_screen_template2.dart';
+import '../utils/templates/main_screen_template.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
