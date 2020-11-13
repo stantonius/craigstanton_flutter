@@ -1,10 +1,12 @@
+import 'package:CraigStantonWeb/screen/apps_home.dart';
 import 'package:flutter/material.dart';
 import '../../screen/homepage.dart';
 import '../../screen/blog_admin_screen.dart';
-import '../../screen/coming_soon.dart';
+//import '../../screen/coming_soon.dart';
 import '../../screen/blog_home.dart';
 import '../../screen/blog_detail_screen.dart';
 import '../../screen/about_screen.dart';
+import '../../screen/weather_app.dart';
 
 /// Some notes on this approach:
 /// Tutorial from ResoCoder is here:
@@ -41,8 +43,13 @@ class RouteGenerator {
             settings: RouteSettings(name: settings.name));
       case ('/apps'):
         return MaterialPageRoute(
-            builder: (_) => ComingSoon(),
+            builder: (_) => AppsHome(),
             settings: RouteSettings(name: settings.name));
+      case ('/weatherapp'):
+        return MaterialPageRoute(
+          builder: (_) => WeatherApp(),
+          settings: RouteSettings(name: settings.name),
+        );
       default:
         return _errorRoute();
     }

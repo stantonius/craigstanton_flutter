@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+// Here is where the User class comes from:
 import '../../models/user.dart';
 
 class FirebaseAuthService extends ChangeNotifier {
@@ -53,9 +54,7 @@ class FirebaseAuthService extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    final signedOut = await _firebaseAuth.signOut();
-    //notifyListeners();
-    return signedOut;
+    return await _firebaseAuth.signOut();
   }
 
   Future<User> get currentUser async {

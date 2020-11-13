@@ -26,14 +26,6 @@ void main() async {
   ));
 }
 
-/*
-  MultiProvider(providers: [
-      Provider(create: (_) => FirebaseAuthService()),
-      StreamProvider(
-          create: (context) =>
-              context.read<FirebaseAuthService>().onAuthStateChanged)
-    ], child: MyApp()));
-*/
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
