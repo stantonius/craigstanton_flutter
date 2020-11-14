@@ -30,48 +30,59 @@ class AppsCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(
-              flex: 1,
-            ),
-            Expanded(
-              flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 4,
-              child: Card(
-                elevation: 2,
-                color: Colors.grey[200],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(url);
-                  },
-                  child: Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: Text('Image Placeholder'),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [Text(title)],
-                              ),
-                              Row(
-                                children: [Text(description)],
-                              ),
-                            ],
+            Flexible(
+              child: FractionallySizedBox(
+                widthFactor:
+                    ResponsiveLayout.isSmallScreen(context) ? 0.9 : 0.7,
+                child: Card(
+                  elevation: 2,
+                  color: Colors.grey[200],
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(url);
+                    },
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Image.network(
+                            img ??
+                                'https://cdn.craigstanton.com/images/placeholder.png',
                           ),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      title,
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      description,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Spacer(
-              flex: 1,
             ),
           ],
         ),

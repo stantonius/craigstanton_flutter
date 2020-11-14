@@ -5,12 +5,17 @@ import 'package:flutter/material.dart';
 final appTheme = () => ThemeData(
     brightness: Brightness.dark,
     backgroundColor: Colors.black,
+    // primaryTextTheme contrasts with the PRIMARY COLOUR
+    primaryTextTheme: TextTheme(
+        headline1:
+            TextStyle(fontFamily: 'Oswald', fontSize: 36, color: Colors.black)),
+    // textTheme contrasts with the CARD and CANVAS colours
     textTheme: TextTheme(
         bodyText1:
-            TextStyle(fontFamily: 'Oswald', fontSize: 24, color: Colors.white),
+            TextStyle(fontFamily: 'Oswald', fontSize: 24, color: Colors.black),
         // bodyText2 is the default text for entire application
         bodyText2:
-            TextStyle(fontFamily: 'Oswald', fontSize: 18, color: Colors.white),
+            TextStyle(fontFamily: 'Oswald', fontSize: 18, color: Colors.black),
         headline2: TextStyle(
             fontFamily: 'Special Elite', fontSize: 28.0, color: Colors.white),
         headline1:
