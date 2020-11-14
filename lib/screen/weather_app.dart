@@ -1,6 +1,7 @@
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
 import 'package:CraigStantonWeb/utils/templates/main_screen_template.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WeatherApp extends StatelessWidget {
   const WeatherApp({Key key}) : super(key: key);
@@ -9,38 +10,44 @@ class WeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return MainPageTemplate(
-      Container(
-          child: FractionallySizedBox(
-        widthFactor: ResponsiveLayout.isSmallScreen(context) ? 0.9 : 0.4,
-        // needs to be a ratio (between 0 and 1) hence divide by screenHeight again
-        heightFactor: (screenHeight * 0.65) / screenHeight,
-        child: Card(
-          elevation: 2,
-          color: Colors.grey[200],
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [PlacesSearch()],
+    return MainPageTemplate(Container(
+        child: FractionallySizedBox(
+            widthFactor: ResponsiveLayout.isSmallScreen(context) ? 0.9 : 0.4,
+            // needs to be a ratio (between 0 and 1) hence divide by screenHeight again
+            heightFactor: (screenHeight * 0.65) / screenHeight,
+            child: Card(
+              elevation: 2,
+              color: Colors.grey[200],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [PlacesSearch()],
+                        ),
+                        Row(
+                          children: [Text('Place')],
+                        ),
+                        Row(children: [
+                          SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: Image.network(
+                              'https://cdn.craigstanton.com/images/weather/sun.png',
+                            ),
+                          )
+                        ]),
+                        Row(
+                          children: [Text('Temp')],
+                        ),
+                      ],
                     ),
-                    Row(
-                      children: [Text('Yo')],
-                    ),
-                    Row(
-                      children: [Text('Pizza')],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      )),
-    );
+            ))));
   }
 }
 
@@ -62,9 +69,8 @@ class _PlacesSearchState extends State<PlacesSearch> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: FractionallySizedBox(
-      widthFactor: 0.5,
+    return SizedBox(
+      width: 400,
       child: TextField(
         controller: _controller,
         onTap: () async {},
@@ -73,12 +79,12 @@ class _PlacesSearchState extends State<PlacesSearch> {
               margin: EdgeInsets.only(left: 20),
               width: 10,
               height: 10,
-              child: Icon(Icons.home, color: Colors.black)),
+              child: Icon(Icons.place, color: Colors.black)),
           hintText: "Enter your shipping address",
           border: InputBorder.none,
           contentPadding: EdgeInsets.only(left: 8.0, top: 16.0),
         ),
       ),
-    ));
+    );
   }
 }
