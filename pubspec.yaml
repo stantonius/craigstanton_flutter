@@ -38,6 +38,7 @@ dependencies:
   flutter_auth_buttons: ^0.9.0
   platform_info: ^1.1.1+3
   uuid: ^2.2.2
+  
 
   # firebase
   cloud_firestore: ^0.14.3
