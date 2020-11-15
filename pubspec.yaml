@@ -55,7 +55,6 @@ dependencies:
   carousel_slider: ^2.2.1
   flare_flutter: ^2.0.6
   markdown_widget: ^1.2.4
-  flutter_svg: ^0.19.1
 
 
 dev_dependencies:

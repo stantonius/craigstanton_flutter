@@ -342,13 +342,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-  flutter_svg:
-    dependency: "direct main"
-    description:
-      name: flutter_svg
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.19.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -548,20 +541,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.1"
-  path_drawing:
-    dependency: transitive
-    description:
-      name: path_drawing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.1+1"
-  path_parsing:
-    dependency: transitive
-    description:
-      name: path_parsing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   path_provider:
     dependency: transitive
     description:
@@ -713,7 +692,7 @@ packages:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.0-nullsafety.4"
+    version: "1.10.0-nullsafety.2"
   state_notifier:
     dependency: transitive
     description:
@@ -827,5 +806,5 @@ packages:
     source: hosted
     version: "4.5.1"
 sdks:
-  dart: ">=2.10.0-110 <=2.11.0-242.0.dev"
+  dart: ">=2.10.0-110 <=2.11.0-213.1.beta"
   flutter: ">=1.22.0 <2.0.0"
