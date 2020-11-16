@@ -1,4 +1,3 @@
-import 'package:CraigStantonWeb/utils/models/user.dart';
 import 'package:CraigStantonWeb/utils/services/authentication/firebase_auth_service.dart';
 import 'package:CraigStantonWeb/utils/services/riverpod/riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +15,7 @@ final appAuthStateChangesProvider =
 void main() async {
   /// Firebase,initialiseApp() currently in index.html also for web app
   await Firebase.initializeApp();
+
 
   /// Placeholder for Google crashlytics
   runApp(ProviderScope(

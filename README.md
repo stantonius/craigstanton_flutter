@@ -16,3 +16,6 @@ Deploying to Firebase:
 
 Running Flutter web in VSCode online
 `flutter run --release -d web-server --web-hostname=0.0.0.0 --web-port=3000` 
+
+### Weather app
+* Tried to use the Google Places API, but ran into CORS restrictions when using Flutter Web (it works for Android, iOS). So ended up using here.com
