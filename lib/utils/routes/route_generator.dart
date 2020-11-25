@@ -6,7 +6,7 @@ import '../../screen/blog_admin_screen.dart';
 import '../../screen/blog_home.dart';
 import '../../screen/blog_detail_screen.dart';
 import '../../screen/about_screen.dart';
-import '../../screen/weather_app2.dart';
+import '../../screen/weather_app.dart';
 
 /// Some notes on this approach:
 /// Tutorial from ResoCoder is here:

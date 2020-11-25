@@ -1,18 +1,25 @@
 import 'dart:convert';
+import 'dart:html';
 
+import 'package:CraigStantonWeb/utils/generated_files/env.dart';
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
 import 'package:CraigStantonWeb/utils/templates/main_screen_template.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
-import '../utils/models/secrets.dart';
-import 'package:http/http.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/all.dart';
+import 'package:http/http.dart' as http;
+import 'package:recase/recase.dart';
 
-class WeatherApp extends StatelessWidget {
+/// Main Weather App
+
+class WeatherApp extends HookWidget {
   const WeatherApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final currentSelection = useProvider(placeSelected.state);
 
     return MainPageTemplate(Container(
         child: FractionallySizedBox(
@@ -29,22 +36,51 @@ class WeatherApp extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
-                          children: [PlacesSearch()],
+                          children: [PlaceSearch()],
                         ),
                         Row(
-                          children: [Text('Place')],
+                          children: [
+                            currentSelection.isNotEmpty
+                                ? Text(currentSelection.last.description)
+                                : Text("")
+                          ],
                         ),
                         Row(children: [
                           SizedBox(
                             width: 150,
                             height: 150,
-                            child: Image.network(
-                              'https://cdn.craigstanton.com/images/weather/sun.png',
-                            ),
+                            child: Image.network(currentSelection.isEmpty
+                                ? 'https://cdn.craigstanton.com/images/weather/sun.png'
+                                : getWeatherIcon(currentSelection
+                                    .last.weather['weather_code']['value'])),
                           )
                         ]),
                         Row(
-                          children: [Text('Temp')],
+                          children: [
+                            currentSelection.isNotEmpty
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        currentSelection
+                                                .last.weather['temp']['value']
+                                                .toString() +
+                                            " \u2103",
+                                        style: TextStyle(fontSize: 28),
+                                      ),
+                                      Text(new ReCase(currentSelection.last
+                                              .weather['weather_code']['value'])
+                                          .titleCase),
+                                      Row(children: [
+                                        Text('Feels like '),
+                                        Text(currentSelection.last
+                                                .weather['feels_like']['value']
+                                                .toString() +
+                                            " \u2103"),
+                                      ])
+                                    ],
+                                  )
+                                : Text(" \u2103")
+                          ],
                         ),
                       ],
                     ),
@@ -55,233 +91,286 @@ class WeatherApp extends StatelessWidget {
   }
 }
 
-class PlacesSearch extends StatefulWidget {
-  PlacesSearch({Key key}) : super(key: key);
+// Classes for riverpod
+
+class PlaceSuggestion {
+  final String description;
+  final String placeId;
+  final bool selected;
+
+  PlaceSuggestion({this.description, this.placeId, this.selected});
 
   @override
-  _PlacesSearchState createState() => _PlacesSearchState();
+  String toString() {
+    return 'The place is $description with id $placeId';
+  }
 }
 
-class _PlacesSearchState extends State<PlacesSearch> {
-  final _controller = TextEditingController();
-  String _streetNumber = '';
-  String _street = '';
-  String _city = '';
-  String _zipCode = '';
+class LocationWeather {
+  final String description;
+  final String placeId;
+  final weather;
+  final coords;
+
+  LocationWeather({
+    this.description,
+    this.placeId,
+    this.weather,
+    this.coords,
+  });
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  String toString() {
+    return 'LocationWeather(description: $description, placeId: $placeId, weather: $weather, coords: $coords)';
+  }
+
+  LocationWeather copyWith({
+    String description,
+    String placeId,
+    weather,
+    coords,
+  }) {
+    return LocationWeather(
+      description: description ?? this.description,
+      placeId: placeId ?? this.placeId,
+      weather: weather ?? this.weather,
+      coords: coords ?? this.coords,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'description': description,
+      'placeId': placeId,
+      'weather': weather,
+      'coords': coords,
+    };
+  }
+
+  factory LocationWeather.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return LocationWeather(
+      description: map['description'],
+      placeId: map['placeId'],
+      weather: Map.from(map['weather']),
+      coords: Map.from(map['coords']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory LocationWeather.fromJson(String source) =>
+      LocationWeather.fromMap(json.decode(source));
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+    final mapEquals = const DeepCollectionEquality().equals;
+
+    return o is LocationWeather &&
+        o.description == description &&
+        o.placeId == placeId &&
+        mapEquals(o.weather, weather) &&
+        mapEquals(o.coords, coords);
+  }
+
+  @override
+  int get hashCode {
+    return description.hashCode ^
+        placeId.hashCode ^
+        weather.hashCode ^
+        coords.hashCode;
+  }
+}
+
+/// Riverpod state management
+
+class SuggestionsList extends StateNotifier<List<PlaceSuggestion>> {
+  /// Empty initial state, unless we want to use the current location to
+  /// fulfill, but this seems much
+  SuggestionsList() : super([]);
+
+  void addItems(List locGuesses) {
+    state = [
+      for (final loc in locGuesses)
+        PlaceSuggestion(
+            description: loc['description'],
+            placeId: loc['placeId'],
+            selected: false)
+    ];
+  }
+
+  void clear() {
+    state = [];
+  }
+}
+
+// Class keeps a record of all searches, hence a list
+class LocationWeatherState extends StateNotifier<List<LocationWeather>> {
+  LocationWeatherState() : super([]);
+
+  Future<Map> fetchCoords(String placeId) async {
+    final details = await http.get(
+        'https://europe-west2-craigstanton-3b97f.cloudfunctions.net/placeDetails',
+        //'http://localhost:5001/craigstanton-3b97f/europe-west2/placeAutocomplete',
+        headers: {"placeid": placeId});
+    return json.decode(details.body);
+  }
+
+  Future<Map> fetchWeather(Map coords) async {
+    const api_key = Env.climacell_api;
+    final weather = await http.get(
+      'https://api.climacell.co/v3/weather/realtime?lat=${coords['lat']}&lon=${coords['lng']}&unit_system=si&fields=precipitation%2Ctemp%2Cfeels_like%2Cweather_code&apikey=$api_key',
+    );
+    return json.decode(weather.body);
+  }
+
+  void addLocation(locSelected) async {
+    final coords = await fetchCoords(locSelected['placeId']);
+    final weather = await fetchWeather(coords);
+    state = [
+      ...state,
+      LocationWeather(
+        description: locSelected['description'],
+        placeId: locSelected['placeId'],
+        coords: coords,
+        weather: weather,
+      )
+    ];
+    print('Updated STATE is ${state.last}');
+  }
+}
+
+/// Setting initial states with Riverpod
+
+final placesState = StateNotifierProvider<SuggestionsList>((ref) {
+  return SuggestionsList();
+});
+
+final placeSelected = StateNotifierProvider<LocationWeatherState>((ref) {
+  return LocationWeatherState();
+});
+
+/// Place search
+
+class PlaceSearch extends StatefulHookWidget {
+  @override
+  _PlaceSearchState createState() => _PlaceSearchState();
+}
+
+class _PlaceSearchState extends State<PlaceSearch> {
+  final _controller = TextEditingController();
+
+  Future autoCompleteSearch(String value) async {
+    final preds = await http.get(
+        'https://europe-west2-craigstanton-3b97f.cloudfunctions.net/placeAutocomplete',
+        //'http://localhost:5001/craigstanton-3b97f/europe-west2/placeAutocomplete',
+        headers: {"text": value});
+    print('These are the predictions returned: ${json.decode(preds.body)}');
+    return json.decode(preds.body);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      child: TextField(
-        controller: _controller,
-        readOnly: true,
-        onTap: () async {
-          final sessionToken = Uuid().v4();
-          final Suggestion result = await showSearch(
-            context: context,
-            delegate: PlaceSuggestions(sessionToken),
-          );
-          if (result != null) {
-            final placeDetails =
-                await PlaceApiProvider(sessionToken: sessionToken)
-                    .getPlaceDetailFromId(result.placeId);
-            setState(() {
-              _controller.text = result.description;
-              _streetNumber = placeDetails.streetNumber;
-              _street = placeDetails.street;
-              _city = placeDetails.city;
-              _zipCode = placeDetails.zipCode;
-            });
-          }
-        },
-        decoration: InputDecoration(
-          icon: Container(
-              margin: EdgeInsets.only(left: 20),
-              width: 10,
-              height: 10,
-              child: Icon(Icons.place, color: Colors.black)),
-          hintText: "Enter your shipping address",
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.only(left: 8.0, top: 16.0),
-        ),
+    // Always initialise state read within build widget
+    final currentPreds = useProvider(placesState.state);
+
+    return Container(
+      child: SizedBox(
+        width: 400,
+        child: Stack(children: [
+          Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  child: TextField(
+                    style: TextStyle(color: Colors.black),
+                    controller: _controller,
+                    decoration: InputDecoration(
+                        hintText: 'Enter a location',
+                        hintStyle: TextStyle(color: Colors.black)),
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        autoCompleteSearch(value).then(
+                            (val) => context.read(placesState).addItems(val));
+                        setState(() {});
+                      }
+                    },
+                  ))),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: currentPreds.length > 0
+                      ? ListView.builder(
+                          itemCount: currentPreds.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              hoverColor: Colors.deepPurple[200],
+                              selectedTileColor: Colors.deepPurple[300],
+                              onTap: () {
+                                /// onTap does 3 things:
+                                /// 1) sets the value of controller text to the value selected
+                                _controller.text =
+                                    currentPreds[index].description;
+
+                                /// 2) create new LocationWeather object using coords received
+                                context.read(placeSelected).addLocation({
+                                  "description":
+                                      currentPreds[index].description,
+                                  "placeId": currentPreds[index].placeId,
+                                });
+
+                                /// 3) clear suggestions list to get rid of dropdown
+                                context.read(placesState).clear();
+                              },
+                              //tileColor: Colors.white,
+                              title: Text(
+                                currentPreds[index].description,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            );
+                          },
+                        )
+                      : null)),
+        ]),
       ),
     );
   }
 }
 
-class PlaceSuggestions extends SearchDelegate<Suggestion> {
-  PlaceSuggestions(this.sessionToken) {
-    apiClient = PlaceApiProvider(sessionToken: sessionToken);
-  }
-
-  final sessionToken;
-  PlaceApiProvider apiClient;
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        tooltip: 'Clear',
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      tooltip: 'Back',
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return null;
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder(
-      future: query == "" ? null : apiClient.fetchSuggestions(query),
-      builder: (context, snapshot) => query == ''
-          ? Container(
-              padding: EdgeInsets.all(16.0),
-              child: Text('Enter your address'),
-            )
-          : snapshot.hasData
-              ? ListView.builder(
-                  itemBuilder: (context, index) => ListTile(
-                    // we will display the data returned from our future here
-                    title:
-                        Text((snapshot.data[index] as Suggestion).description),
-                    onTap: () {
-                      close(context, snapshot.data[index] as Suggestion);
-                    },
-                  ),
-                  itemCount: snapshot.data.length,
-                )
-              : Container(child: Text('Loading...')),
-    );
-  }
-}
-
-class Suggestion {
-  final String placeId;
-  final String description;
-
-  Suggestion(this.placeId, this.description);
-
-  @override
-  String toString() {
-    return 'Suggestion(description: $description, placeId: $placeId)';
-  }
-}
-
-class Place {
-  String streetNumber;
-  String street;
-  String city;
-  String zipCode;
-
-  Place({
-    this.streetNumber,
-    this.street,
-    this.city,
-    this.zipCode,
-  });
-
-  @override
-  String toString() {
-    return 'Place(streetNumber: $streetNumber, street: $street, city: $city, zipCode: $zipCode)';
-  }
-}
-
-class PlaceApiProvider {
-  final client = Client();
-
-  PlaceApiProvider(
-      {this.sessionToken,
-      this.apiKey = 'AIzaSyALZEVHhDs76TSye_t1WUVW_yKvXvtZaOQ'});
-
-  final sessionToken;
-  final apiKey;
-/*
-  Future<SecretLoader> getApiKey() async {
-    final key = SecretLoader(secretPath: '../../secrets.json');
-    return key;
-  }
-*/
-  Future<List<Suggestion>> fetchSuggestions(String input) async {
-    //final apiKey = await getApiKey();
-
-    final request =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&key=$apiKey&sessiontoken=$sessionToken';
-    final response = await client.get(request);
-    print("Response is: $response");
-
-    if (response.statusCode == 200) {
-      final result = json.decode(response.body);
-      if (result['status'] == 'OK') {
-        // compose suggestions in a list
-        return result['predictions']
-            .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
-            .toList();
-      }
-      if (result['status'] == 'ZERO_RESULTS') {
-        return [];
-      }
-      throw Exception(result['error_message']);
-    } else {
-      throw Exception('Failed to fetch suggestion');
-    }
-  }
-
-  Future<Place> getPlaceDetailFromId(String placeId) async {
-    final request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey&sessiontoken=$sessionToken';
-    final response = await client.get(request);
-
-    if (response.statusCode == 200) {
-      final result = json.decode(response.body);
-      if (result['status'] == 'OK') {
-        final components =
-            result['result']['address_components'] as List<dynamic>;
-        // build result
-        final place = Place();
-        components.forEach((c) {
-          final List type = c['types'];
-          if (type.contains('street_number')) {
-            place.streetNumber = c['long_name'];
-          }
-          if (type.contains('route')) {
-            place.street = c['long_name'];
-          }
-          if (type.contains('locality')) {
-            place.city = c['long_name'];
-          }
-          if (type.contains('postal_code')) {
-            place.zipCode = c['long_name'];
-          }
-        });
-        return place;
-      }
-      throw Exception(result['error_message']);
-    } else {
-      throw Exception('Failed to fetch suggestion');
-    }
+String getWeatherIcon(code) {
+  switch (code) {
+    case "rain":
+    case "rain_heavy":
+    case "rain_light":
+    case "freezing_rain":
+    case "freezing_rain_heavy":
+    case "freezing_rain_light":
+    case "freezing_drizzle":
+      return 'https://cdn.craigstanton.com/images/weather/rain.png';
+    case "drizzle":
+      return 'https://cdn.craigstanton.com/images/weather/cloudy_rain.png';
+    case "cloudy":
+    case "mostly_cloudy":
+      return 'https://cdn.craigstanton.com/images/weather/cloud.png';
+    case "snow":
+    case "snow_heavy":
+    case "snow_light":
+      return 'https://cdn.craigstanton.com/images/weather/snow.png';
+    case "flurries":
+      return 'https://cdn.craigstanton.com/images/weather/cloudy_snow.png';
+    case "tstorm":
+      return 'https://cdn.craigstanton.com/images/weather/thunderstorm.png';
+    case "partly_cloudy":
+    case "mostly_clear":
+      return 'https://cdn.craigstanton.com/images/weather/sun_and_clouds.png';
+    case "clear":
+      return 'https://cdn.craigstanton.com/images/weather/sun.png';
+    default:
+      print("WENT TO DEFAULT");
+      return 'https://cdn.craigstanton.com/images/weather/sun.png';
   }
 }
