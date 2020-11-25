@@ -29,7 +29,7 @@ class FirebaseAuthService extends ChangeNotifier {
   }
 
   Stream get onAuthStateChanged {
-    notifyListeners();
+    //notifyListeners();
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
@@ -49,7 +49,7 @@ class FirebaseAuthService extends ChangeNotifier {
     final authResult = await _firebaseAuth.signInWithCredential(credential);
     final user = _userFromFirebase(authResult.user);
     print('User from firebase is $user');
-    notifyListeners();
+    //notifyListeners();
     return _userFromFirebase(authResult.user);
   }
 

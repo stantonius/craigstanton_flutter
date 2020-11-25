@@ -16,7 +16,6 @@ void main() async {
   /// Firebase,initialiseApp() currently in index.html also for web app
   await Firebase.initializeApp();
 
-
   /// Placeholder for Google crashlytics
   runApp(ProviderScope(
     observers: [

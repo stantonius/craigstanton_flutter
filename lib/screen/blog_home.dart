@@ -38,9 +38,8 @@ class BlogHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference getBlogs = ConstUtils().helperUtils.isMicrosoftHosted()
-        ? FirebaseFirestore.instance.collection('blog_dev')
-        : FirebaseFirestore.instance.collection('blog');
+    CollectionReference getBlogs =
+        FirebaseFirestore.instance.collection('blog_dev');
 
     return Padding(
       padding: EdgeInsets.all(0),
@@ -162,6 +161,6 @@ class BlogItem implements ListItem {
   }
 
   getData() {
-    return blog.data;
+    return blog.data();
   }
 }

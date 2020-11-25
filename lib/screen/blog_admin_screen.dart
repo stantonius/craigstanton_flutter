@@ -23,10 +23,10 @@ class BlogAdminScreen extends StatelessWidget {
   }
 }
 
-class BlogAdmin extends ConsumerWidget {
+class BlogAdmin extends HookWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final user = watch(appAuthStateChangesProvider);
+  Widget build(BuildContext context) {
+    final user = useProvider(appAuthStateChangesProvider);
     return user.when(
       data: (user) => _formIfUser(context, user),
       loading: () => const Scaffold(
