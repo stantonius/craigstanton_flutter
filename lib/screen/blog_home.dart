@@ -1,5 +1,4 @@
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
-import 'package:CraigStantonWeb/utils/models/const_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -39,7 +38,7 @@ class BlogHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference getBlogs =
-        FirebaseFirestore.instance.collection('blog_dev');
+        FirebaseFirestore.instance.collection('blog');
 
     return Padding(
       padding: EdgeInsets.all(0),

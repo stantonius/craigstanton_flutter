@@ -47,8 +47,8 @@ class _PageHomeState extends State<PageHome> {
                 : true,
             child: Container(
               margin: EdgeInsets.only(
-                top: 100,
-              ),
+                  top: 100,
+                  right: ResponsiveLayout.isLargeScreen(context) ? 100 : 0),
               child: ImageCarousel(),
               height: ResponsiveLayout.isSmallScreen(context)
                   ? 300
@@ -87,7 +87,7 @@ class _PageHomeState extends State<PageHome> {
                       ConstUtils().widgetUtils.menuTextWithSize(
                           context: context,
                           name: "HELLO, I’M",
-                          color: Colors.white,
+                          color: Theme.of(context).textTheme.headline3.color,
                           textSizeSmall: 16,
                           textSizeMedium: 22,
                           textSizeLarge: 30),

@@ -1,8 +1,11 @@
+import 'package:CraigStantonWeb/main.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/all.dart';
+
 import '../layouts/ResponsiveLayout.dart';
 import '../models/const_utils.dart';
 import '../models/constants/widget_utils.dart';
 import 'package:flutter/material.dart';
-import '../widgets/circles.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 class MainPageTemplate extends StatefulWidget {
@@ -30,12 +33,12 @@ class _MainPageTemplate extends State<MainPageTemplate>
         appBar: PreferredSize(
             preferredSize: ResponsiveLayout.isSmallScreen(context)
                 ? Size.fromHeight(50.0)
-                : Size.fromHeight(0.0),
+                : Size.fromHeight(50.0),
             // here the desired height
             child: AppBar(
               centerTitle: true,
               elevation: 0.0,
-              backgroundColor: Colors.red,
+
               iconTheme: new IconThemeData(color: Colors.white),
 
               // ...
@@ -43,52 +46,50 @@ class _MainPageTemplate extends State<MainPageTemplate>
         drawer: ResponsiveLayout.isSmallScreen(context)
             ? Drawer(
                 child: Container(
-                    color: ConstUtils().colorUtils.blackBG_A,
                     child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: 30),
-                          child: ConstUtils().widgetUtils.headingText(
-                              name: ConstUtils().stringUtils.fullname,
-                              color: Colors.white,
-                              context: context,
-                              textSizeLarge: 32,
-                              textSizeMedium: 22,
-                              textSizeSmall: 18),
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(
-                                top: 20, bottom: 20, left: 10, right: 10),
-                            child: WidgetUtils().lineHorizontal(
-                                color: Colors.black45, height: 1)),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: menuList.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                splashColor: Colors.yellow,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(14),
-                                  child: ConstUtils().widgetUtils.menuButtons(
-                                      menuList.keys.elementAt(index),
-                                      menuList[menuList.keys.elementAt(index)],
-                                      context),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    clickPosition = index;
-                                    Navigator.of(context).pop();
-                                  });
-                                },
-                              );
-                            }),
-                      ],
-                    )),
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(top: 30),
+                      child: ConstUtils().widgetUtils.headingText(
+                          name: ConstUtils().stringUtils.fullname,
+                          context: context,
+                          textSizeLarge: 32,
+                          textSizeMedium: 22,
+                          textSizeSmall: 18),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(
+                            top: 20, bottom: 20, left: 10, right: 10),
+                        child: WidgetUtils()
+                            .lineHorizontal(color: Colors.black45, height: 1)),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: menuList.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            splashColor: Colors.yellow,
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: ConstUtils().widgetUtils.menuButtons(
+                                  menuList.keys.elementAt(index),
+                                  menuList[menuList.keys.elementAt(index)],
+                                  context),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                clickPosition = index;
+                                Navigator.of(context).pop();
+                              });
+                            },
+                          );
+                        }),
+                    ThemeSwitch()
+                  ],
+                )),
               )
             : null,
         body: Stack(alignment: Alignment.center, children: <Widget>[
-          //BackgroundCircles(),
           Visibility(
             visible: ResponsiveLayout.isSmallScreen(context) ? false : true,
             child: Stack(
@@ -134,11 +135,36 @@ class _MainPageTemplate extends State<MainPageTemplate>
                         animation:
                             _animationName, // CRITICAL IT IS SAME NAME AS ANIMATION IN RIVE
                       ),
-                    ))
+                    )),
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        padding: EdgeInsets.only(top: 20),
+                        child: ThemeSwitch()))
               ],
             ),
           ),
           widget.bodyWidget
         ]));
+  }
+}
+
+class ThemeSwitch extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    bool isDarkTheme = useProvider(appThemeProvider).state;
+
+    return Container(
+        child: Switch(
+      value: isDarkTheme,
+      activeColor: Colors.red,
+      inactiveTrackColor: Colors.blue,
+      inactiveThumbColor: Colors.green,
+      activeTrackColor: Colors.yellow,
+      onChanged: (newValue) {
+        context.read(appThemeProvider).state = !isDarkTheme;
+        print(newValue);
+      },
+    ));
   }
 }

@@ -32,12 +32,10 @@ class WidgetUtils {
             onPressed: () {
               Navigator.pushNamed(context, namedlink);
             },
-            child: Text(buttontext,
-                style: TextStyle(
-                  fontSize: ResponsiveLayout.isSmallScreen(context) ? 18 : 20,
-                  //fontFamily: ConstUtils().stringUtils.fontMenu,
-                  //color: Colors.white
-                ))));
+            child: Text(
+              buttontext,
+              style: Theme.of(context).textTheme.headline5,
+            )));
   }
 
   Widget menuText(String name, Color color, BuildContext context) {
@@ -131,7 +129,6 @@ class WidgetUtils {
         color: color,
         fontSize: textSize,
         fontWeight: FontWeight.w700,
-        //fontFamily: ConstUtils().stringUtils.fontHeading
       ),
     );
   }

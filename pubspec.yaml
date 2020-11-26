@@ -34,7 +34,7 @@ dependencies:
   flutter_hooks: ^0.15.0
   flutter_rounded_progress_bar: null
   font_awesome_flutter: ^8.5.0
-  google_fonts: ^1.1.0
+  google_fonts: ^1.1.1
   google_sign_in: ^4.5.6
   googleapis: ^0.56.1
   googleapis_auth: ^0.2.12
@@ -64,7 +64,6 @@ flutter:
   assets:
     - images/
     - animations/
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -74,21 +73,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: menu
-      fonts:
-        - asset: fonts/f_menu.ttf
-    - family: heading
-      fonts:
-        - asset: fonts/f_heading.ttf
-    - family: content
-      fonts:
-        - asset: fonts/f_content.ttf
-    - family: Special Elite
-      fonts:
-        - asset: fonts/SpecialElite-Regular.ttf
-    - family: Oswald
-      fonts:
-        - asset: fonts/Oswald-VariableFont_wght.ttf
+  # fonts:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
