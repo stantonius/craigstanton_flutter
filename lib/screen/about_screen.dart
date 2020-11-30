@@ -36,8 +36,6 @@ class _AboutViewState extends State<AboutView> {
           Expanded(
             flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 4,
             child: Card(
-              elevation: 1,
-              color: Colors.grey,
               child: Row(
                 children: [
                   Flexible(
@@ -91,8 +89,6 @@ class _AboutViewState extends State<AboutView> {
           Expanded(
             flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 4,
             child: Card(
-              elevation: 1,
-              color: Colors.grey,
               child: Row(
                 children: [
                   Flexible(

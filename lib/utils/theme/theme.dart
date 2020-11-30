@@ -18,6 +18,8 @@ final appTheme = (bool isDarkTheme) => ThemeData(
 
     /// Color for appbar, toolbar, tabs
     primaryColor: Color(0xff212529),
+    accentColor: Colors.pink,
+    backgroundColor: Colors.purple,
 
     /// Main background for scaffold & majority of app
     scaffoldBackgroundColor: isDarkTheme ? mainDarkColour : mainLightColour,
@@ -70,14 +72,14 @@ final appTheme = (bool isDarkTheme) => ThemeData(
       subtitle1: isDarkTheme
           ? GoogleFonts.oswald(
               textStyle: TextStyle(
-                  fontSize: 18,
-                  color: mainLightColour,
-                  fontWeight: FontWeight.w300))
+              fontSize: 18,
+              color: mainLightColour,
+            ))
           : GoogleFonts.oswald(
               textStyle: TextStyle(
-                  fontSize: 18,
-                  color: mainDarkColour,
-                  fontWeight: FontWeight.w300)),
+              fontSize: 18,
+              color: mainDarkColour,
+            )),
 
       /// For medium emphasis text that's a little smaller than [subtitle1].
       subtitle2: isDarkTheme
@@ -90,19 +92,19 @@ final appTheme = (bool isDarkTheme) => ThemeData(
       bodyText2: isDarkTheme
           ? GoogleFonts.montserrat(
               textStyle: TextStyle(fontSize: 15, color: mainLightColour))
-          : TextStyle(
-              fontFamily: 'Oswald', fontSize: 15, color: mainDarkColour),
+          : GoogleFonts.montserrat(
+              textStyle: TextStyle(fontSize: 15, color: mainDarkColour)),
 
       /// bodyText1 used for emphasis on what otherwise would be bodyText2
       bodyText1: isDarkTheme
           ? GoogleFonts.montserrat(
               textStyle: TextStyle(
-                  fontSize: 18,
+                  fontSize: 15,
                   color: mainLightColour,
                   fontWeight: FontWeight.bold))
           : GoogleFonts.montserrat(
               textStyle: TextStyle(
-                  fontSize: 18,
+                  fontSize: 15,
                   color: mainDarkColour,
                   fontWeight: FontWeight.bold)),
 
@@ -123,7 +125,15 @@ final appTheme = (bool isDarkTheme) => ThemeData(
       overline:
       */
     ),
+    iconTheme: isDarkTheme
+        ? IconThemeData(color: mainLightColour)
+        : IconThemeData(color: mainDarkColour),
     buttonTheme: ButtonThemeData(buttonColor: mainLightColour),
+    cardTheme: CardTheme(
+        color: isDarkTheme ? Color(0xff343a40) : Color(0xffdee2e6),
+        shadowColor: isDarkTheme ? Color(0xff343a40) : mainDarkColour,
+        elevation: 8,
+        margin: EdgeInsets.all(20)),
     // This makes the visual density adapt to the platform that you run
     // the app on. For desktop platforms, the controls will be smaller and
     // closer together (more dense) than on mobile platforms.

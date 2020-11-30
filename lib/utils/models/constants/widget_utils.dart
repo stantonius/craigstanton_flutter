@@ -68,14 +68,9 @@ class WidgetUtils {
       textSize = textSizeLarge;
     }
 
-    return Text(
-      name,
-      style: TextStyle(
-        color: color,
-        fontSize: textSize,
-        //fontFamily: ConstUtils().stringUtils.fontMenu
-      ),
-    );
+    return Text(name,
+        style:
+            Theme.of(context).textTheme.headline4.copyWith(fontSize: textSize));
   }
 
   Widget menuTextWithCenterSize(
@@ -123,25 +118,21 @@ class WidgetUtils {
       textSize = textSizeLarge;
     }
 
-    return Text(
-      name,
-      style: TextStyle(
-        color: color,
-        fontSize: textSize,
-        fontWeight: FontWeight.w700,
-      ),
-    );
+    return Text(name,
+        style: Theme.of(context).textTheme.headline2.copyWith(
+              fontSize: textSize,
+              fontWeight: FontWeight.w700,
+            ));
   }
 
-  Widget contentText(String name, Color color, double fontSize) {
+  Widget contentText(
+      {BuildContext context, String name, Color color, double fontSize}) {
     return Text(
       name,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: FontWeight.w700,
-        //fontFamily: ConstUtils().stringUtils.fontContent
-      ),
+      style: Theme.of(context)
+          .textTheme
+          .headline5
+          .copyWith(color: Color(0xff6c757d), fontWeight: FontWeight.w700),
     );
   }
 

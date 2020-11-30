@@ -118,7 +118,17 @@ class MainForm extends StatelessWidget {
             color: Colors.red,
           )
         ]),
-        BlogUpdateForm()
+        Row(
+          children: [
+            Spacer(
+              flex: 1,
+            ),
+            Expanded(flex: 2, child: BlogUpdateForm()),
+            Spacer(
+              flex: 1,
+            )
+          ],
+        )
       ],
     );
   }
@@ -194,6 +204,8 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
                     child: Text("Blockchain"), value: "Blockchain"),
                 FormBuilderFieldOption(
                     child: Text("Random Thoughts"), value: "Random Thoughts"),
+                FormBuilderFieldOption(
+                    child: Text("Flutter"), value: "Flutter"),
               ],
             ),
           ),
@@ -229,7 +241,7 @@ class BlogUpdateFormState extends State<BlogUpdateForm> {
                       if (_formKey.currentState.saveAndValidate()) {
                         //_formKey.currentState.setAttributeValue("heello", "sup");
                         FirebaseFirestore.instance
-                            .collection('blog_dev')
+                            .collection('blog')
                             .doc()
                             .set({
                           'blogfile': _formKey.currentState.value['blogfile'],

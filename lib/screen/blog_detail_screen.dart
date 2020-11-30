@@ -1,5 +1,11 @@
+import 'package:CraigStantonWeb/main.dart';
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
+import 'package:CraigStantonWeb/utils/widgets/url_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/all.dart';
+import 'package:markdown_widget/config/widget_config.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:markdown_widget/config/highlight_themes.dart' as theme;
 
@@ -16,14 +22,15 @@ class BlogDetailHome extends StatelessWidget {
   }
 }
 
-class BlogDetail extends StatelessWidget {
+class BlogDetail extends HookWidget {
   final Map data;
 
   const BlogDetail({Key key, @required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = ScrollController();
+    final controller = TocController();
+    final isDarkTheme = useProvider(appThemeProvider).state;
 
     return Padding(
       padding: ResponsiveLayout.isSmallScreen(context)
@@ -46,18 +53,58 @@ class BlogDetail extends StatelessWidget {
             ),
             Expanded(
                 child: MarkdownWidget(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-              //controller: controller,
-              data: data['blogfile'],
-              styleConfig: StyleConfig(
-                  markdownTheme: MarkdownTheme.lightTheme,
-                  preConfig: PreConfig(
-                      autoDetectionLanguage: true,
-                      theme: theme.githubGistTheme)),
-            ))
+                    widgetConfig: WidgetConfig(ul: _ulFunction()),
+                    loadingWidget: CircularProgressIndicator(),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 250),
+                    controller: controller,
+                    data: data['blogfile'],
+                    styleConfig: StyleConfig(
+                      ulConfig: UlConfig(
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            .copyWith(height: 1.5),
+                        dotSize: 5,
+                      ),
+                      titleConfig: TitleConfig(
+                          commonStyle: TextStyle(
+                              height: 3,
+                              color:
+                                  Theme.of(context).textTheme.headline1.color),
+                          space: 10),
+                      pConfig: PConfig(
+                          linkStyle:
+                              Theme.of(context).textTheme.bodyText1.copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                          onLinkTap: (url) => launchUrl(url),
+                          textStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              .copyWith(height: 1.5)),
+                      codeConfig: CodeConfig(
+                        codeStyle: GoogleFonts.sourceCodePro(
+                            color: Colors.red,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2.fontSize),
+                      ),
+                      blockQuoteConfig: BlockQuoteConfig(
+                          backgroundColor: Colors.pink,
+                          blockColor: Colors.pink,
+                          blockStyle: TextStyle(color: Colors.pink)),
+                      preConfig: PreConfig(
+                          language: "dart",
+                          theme: theme.a11yLightTheme,
+                          textStyle: GoogleFonts.sourceCodePro(fontSize: 12)),
+                    )))
           ],
         ),
       ),
     );
   }
+}
+
+_ulFunction() {
+  print('DOES THIS WORK');
 }

@@ -116,7 +116,7 @@ class _MainPageTemplate extends State<MainPageTemplate>
                               ),
                               onTap: () {
                                 setState(() {
-                                  clickPosition = index;
+                                  //clickPosition = index;
                                 });
                               },
                             );
@@ -157,10 +157,10 @@ class ThemeSwitch extends HookWidget {
     return Container(
         child: Switch(
       value: isDarkTheme,
-      activeColor: Colors.red,
-      inactiveTrackColor: Colors.blue,
-      inactiveThumbColor: Colors.green,
-      activeTrackColor: Colors.yellow,
+      activeColor: Color(0xfff8f9fa),
+      activeTrackColor: Color(0xff6c757d),
+      inactiveTrackColor: Color(0xff6c757d),
+      inactiveThumbColor: Color(0xff212529),
       onChanged: (newValue) {
         context.read(appThemeProvider).state = !isDarkTheme;
         print(newValue);

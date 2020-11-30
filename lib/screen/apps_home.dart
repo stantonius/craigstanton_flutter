@@ -8,7 +8,12 @@ class AppsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainPageTemplate(AppsCard(
-        title: 'Title', description: 'Description', url: '/weatherapp'));
+      title: 'Basic Weather App',
+      description:
+          'Experiment to get familiar with Riverpod, including calling APIs in Flutter. As it turns out, it required even more engineering with Cloud Functions to bypass CORS restrictions on Google APIs.',
+      url: '/weatherapp',
+      img: "https://cdn.craigstanton.com/images/weather/sun_and_clouds.png",
+    ));
   }
 }
 
@@ -32,13 +37,15 @@ class AppsCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(
+              flex: 1,
+            ),
             Flexible(
+              flex: ResponsiveLayout.isSmallScreen(context) ? 8 : 4,
               child: FractionallySizedBox(
                 widthFactor:
                     ResponsiveLayout.isSmallScreen(context) ? 0.9 : 0.7,
                 child: Card(
-                  elevation: 2,
-                  color: Colors.grey[200],
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context).pushNamed(url);
@@ -54,36 +61,20 @@ class AppsCard extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 2,
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      title,
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      description,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
+                            flex: 2,
+                            child: ListTile(
+                              title: Text(title),
+                              subtitle: Text(description),
+                            ))
                       ],
                     ),
                   ),
                 ),
               ),
             ),
+            Spacer(
+              flex: 1,
+            )
           ],
         ),
       ],
