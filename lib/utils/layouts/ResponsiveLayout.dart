@@ -23,6 +23,10 @@ class ResponsiveLayout extends StatelessWidget {
         MediaQuery.of(context).size.width < 1200;
   }
 
+  static bool isSmallORMediumScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width < 1080;
+  }
+
   static bool isLargeScreen(BuildContext context) {
     return MediaQuery.of(context).size.width > 800;
   }

@@ -55,8 +55,12 @@ class BlogDetail extends HookWidget {
                 child: MarkdownWidget(
                     widgetConfig: WidgetConfig(ul: _ulFunction()),
                     loadingWidget: CircularProgressIndicator(),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 250),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal:
+                            ResponsiveLayout.isSmallORMediumScreen(context)
+                                ? 40
+                                : 250),
                     controller: controller,
                     data: data['blogfile'],
                     styleConfig: StyleConfig(

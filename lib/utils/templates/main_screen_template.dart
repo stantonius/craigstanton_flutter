@@ -67,22 +67,10 @@ class _MainPageTemplate extends State<MainPageTemplate>
                         itemCount: menuList.length,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            splashColor: Colors.yellow,
-                            child: Padding(
-                              padding: const EdgeInsets.all(14),
-                              child: ConstUtils().widgetUtils.menuButtons(
-                                  menuList.keys.elementAt(index),
-                                  menuList[menuList.keys.elementAt(index)],
-                                  context),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                clickPosition = index;
-                                Navigator.of(context).pop();
-                              });
-                            },
-                          );
+                          return ConstUtils().widgetUtils.menuButtons(
+                              menuList.keys.elementAt(index),
+                              menuList[menuList.keys.elementAt(index)],
+                              context);
                         }),
                     ThemeSwitch()
                   ],
@@ -98,30 +86,18 @@ class _MainPageTemplate extends State<MainPageTemplate>
                 Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      padding: EdgeInsets.only(top: 20),
-                      height: 80,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: menuList.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              splashColor: Colors.yellow,
-                              child: Padding(
-                                padding: const EdgeInsets.all(14),
-                                child: ConstUtils().widgetUtils.menuButtons(
-                                    menuList.keys.elementAt(index),
-                                    menuList[menuList.keys.elementAt(index)],
-                                    context),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  //clickPosition = index;
-                                });
-                              },
-                            );
-                          }),
-                    )),
+                        padding: EdgeInsets.only(top: 20),
+                        height: 80,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: menuList.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ConstUtils().widgetUtils.menuButtons(
+                                  menuList.keys.elementAt(index),
+                                  menuList[menuList.keys.elementAt(index)],
+                                  context);
+                            }))),
                 Align(
                     alignment: Alignment.topLeft,
                     child: Container(
