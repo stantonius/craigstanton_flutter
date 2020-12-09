@@ -34,6 +34,7 @@ dependencies:
   flutter_hooks: ^0.15.0
   flutter_rounded_progress_bar: null
   font_awesome_flutter: ^8.5.0
+  get_it: ^5.0.1
   google_fonts: ^1.1.1
   google_sign_in: ^4.5.6
   googleapis: ^0.56.1

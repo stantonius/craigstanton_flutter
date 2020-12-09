@@ -9,16 +9,13 @@ import 'package:markdown_widget/config/widget_config.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:markdown_widget/config/highlight_themes.dart' as theme;
 
-// Import main template and homepage class
-import '../utils/templates/main_screen_template.dart';
-
 class BlogDetailHome extends StatelessWidget {
   final Map data;
   const BlogDetailHome({Key key, @required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MainPageTemplate(BlogDetail(data: data));
+    return BlogDetail(data: data);
   }
 }
 

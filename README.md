@@ -20,6 +20,14 @@
 Was using VSCode online (aka Codespaces) for a while, but gave up as the the environment was unstable
 `flutter run --release -d web-server --web-hostname=0.0.0.0 --web-port=3000`
 
+### Navigation and Routing
+
+I experienced an issue where the entire page reloaded when moving to a new route. This was because I was using a main template and only changing the views within the template - however I was calling both the template and the page view to rebuild. Therefore I followed [this tutorial](https://www.filledstacks.com/post/template-layouts-and-navigation-in-flutter-web/) where we embed the navigator _within the main template_ so that only the view is rebuilt. This was done using two techniques:
+
+1. adding a `builder` within the `MaterialApp()` widget that passes the context and _a child_ to the main template
+2. Using a `GlobalKey` and passing it to a Navigator (`NavigatorState`) - I am actually not entirely sure this is necessary (it uses the `get_it` package which to me is just another - small - state management library).
+   The code is seen [here](https://github.com/FilledStacks/flutter-tutorials/tree/master/037-advanced-web-navigation/00-starting/lib)
+
 ### Weather app
 
 - Tried to use the Google Places API for Place Autocomplete and Place Details, but ran into CORS restrictions when using Flutter Web (it works for Android, iOS). So had to use a Cloud Function middleware (code is [here](https://github.com/stantonius/craigstanton_api_nodejs)). I also used a free weather API from Climacell. It allows for 1000 calls a day for free. The API key is stored in `.env` - see below for rationale.

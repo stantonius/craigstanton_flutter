@@ -3,7 +3,7 @@ import 'dart:html';
 
 import 'package:CraigStantonWeb/utils/generated_files/env.dart';
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
-import 'package:CraigStantonWeb/utils/templates/main_screen_template.dart';
+import 'package:CraigStantonWeb/utils/theme/theme.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,14 +21,15 @@ class WeatherApp extends HookWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final currentSelection = useProvider(placeSelected.state);
 
-    return MainPageTemplate(Container(
+    return Container(
         child: FractionallySizedBox(
             widthFactor: ResponsiveLayout.isSmallScreen(context) ? 0.9 : 0.4,
             // needs to be a ratio (between 0 and 1) hence divide by screenHeight again
-            heightFactor: (screenHeight * 0.65) / screenHeight,
+            heightFactor: ResponsiveLayout.isSmallScreen(context)
+                ? (screenHeight * 0.9) / screenHeight
+                : (screenHeight * 0.65) / screenHeight,
             child: Card(
               elevation: 2,
-              color: Colors.grey[200],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -38,12 +39,15 @@ class WeatherApp extends HookWidget {
                         Row(
                           children: [PlaceSearch()],
                         ),
-                        Row(
-                          children: [
-                            currentSelection.isNotEmpty
-                                ? Text(currentSelection.last.description)
-                                : Text("")
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Row(
+                            children: [
+                              currentSelection.isNotEmpty
+                                  ? Text(currentSelection.last.description)
+                                  : Text("")
+                            ],
+                          ),
                         ),
                         Row(children: [
                           SizedBox(
@@ -55,39 +59,45 @@ class WeatherApp extends HookWidget {
                                     .last.weather['weather_code']['value'])),
                           )
                         ]),
-                        Row(
-                          children: [
-                            currentSelection.isNotEmpty
-                                ? Column(
-                                    children: [
-                                      Text(
-                                        currentSelection
-                                                .last.weather['temp']['value']
-                                                .toString() +
-                                            " \u2103",
-                                        style: TextStyle(fontSize: 28),
-                                      ),
-                                      Text(new ReCase(currentSelection.last
-                                              .weather['weather_code']['value'])
-                                          .titleCase),
-                                      Row(children: [
-                                        Text('Feels like '),
-                                        Text(currentSelection.last
-                                                .weather['feels_like']['value']
-                                                .toString() +
-                                            " \u2103"),
-                                      ])
-                                    ],
-                                  )
-                                : Text(" \u2103")
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Row(
+                            children: [
+                              currentSelection.isNotEmpty
+                                  ? Column(
+                                      children: [
+                                        Text(
+                                          currentSelection
+                                                  .last.weather['temp']['value']
+                                                  .toString() +
+                                              " \u2103",
+                                          style: TextStyle(fontSize: 28),
+                                        ),
+                                        Text(new ReCase(currentSelection.last
+                                                    .weather['weather_code']
+                                                ['value'])
+                                            .titleCase),
+                                        Row(children: [
+                                          Text('Feels like '),
+                                          Text(currentSelection
+                                                  .last
+                                                  .weather['feels_like']
+                                                      ['value']
+                                                  .toString() +
+                                              " \u2103"),
+                                        ])
+                                      ],
+                                    )
+                                  : Text(" \u2103")
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-            ))));
+            )));
   }
 }
 
@@ -278,18 +288,23 @@ class _PlaceSearchState extends State<PlaceSearch> {
 
     return Container(
       child: SizedBox(
-        width: 400,
+        width: ResponsiveLayout.isSmallScreen(context)
+            ? MediaQuery.of(context).size.width * 0.7
+            : MediaQuery.of(context).size.width * 0.3,
         child: Stack(children: [
           Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                  padding: const EdgeInsets.only(bottom: 100),
+                  padding: EdgeInsets.only(
+                      bottom:
+                          ResponsiveLayout.isSmallScreen(context) ? 10 : 100),
                   child: TextField(
-                    style: TextStyle(color: Colors.black),
+                    //style: TextStyle(color: Colors.black),
                     controller: _controller,
                     decoration: InputDecoration(
-                        hintText: 'Enter a location',
-                        hintStyle: TextStyle(color: Colors.black)),
+                      hintText: 'Enter a location',
+                      //hintStyle: TextStyle(color: Colors.black)
+                    ),
                     onChanged: (value) {
                       if (value.isNotEmpty) {
                         autoCompleteSearch(value).then(
@@ -308,6 +323,7 @@ class _PlaceSearchState extends State<PlaceSearch> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return ListTile(
+                              tileColor: mediumCanvasColour,
                               hoverColor: Colors.deepPurple[200],
                               selectedTileColor: Colors.deepPurple[300],
                               onTap: () {

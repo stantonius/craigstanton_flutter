@@ -14,12 +14,27 @@ import 'package:google_fonts/google_fonts.dart';
 const mainLightColour = Color(0xfff8f9fa);
 const mainDarkColour = Color(0xff212529);
 
+const lightCanvasColour = Color(0xffEDE9F0); //slight purple hue
+const mediumCanvasColour = Color(0xffEFDAFB);
+const darkCanvasColour = Color(0xffCE85F3);
+const alarmColour = Color(0xffC4122F);
+
+const electric = Color(0xffAC2FEB);
+
+///
+///
+///
+///
+
 final appTheme = (bool isDarkTheme) => ThemeData(
 
     /// Color for appbar, toolbar, tabs
     primaryColor: Color(0xff212529),
     accentColor: Colors.pink,
     backgroundColor: Colors.purple,
+
+    /// Added only for the effect on drawers
+    canvasColor: isDarkTheme ? electric : lightCanvasColour,
 
     /// Main background for scaffold & majority of app
     scaffoldBackgroundColor: isDarkTheme ? mainDarkColour : mainLightColour,
@@ -38,9 +53,17 @@ final appTheme = (bool isDarkTheme) => ThemeData(
               textStyle: TextStyle(fontSize: 80, color: mainDarkColour)),
       headline2: isDarkTheme
           ? GoogleFonts.oswald(
-              textStyle: TextStyle(fontSize: 50, color: mainLightColour))
+              textStyle: TextStyle(
+                  fontSize: 50,
+                  color: mainLightColour,
+                  shadows: [Shadow(color: electric, offset: Offset(2, 2))]))
           : GoogleFonts.oswald(
-              textStyle: TextStyle(fontSize: 50, color: mainDarkColour)),
+              textStyle: TextStyle(
+                  fontSize: 50,
+                  color: mainDarkColour,
+                  shadows: [
+                  Shadow(color: darkCanvasColour, offset: Offset(2, 2))
+                ])),
       headline3: isDarkTheme
           ? GoogleFonts.oswald(
               textStyle: TextStyle(fontSize: 40, color: mainLightColour))
@@ -130,8 +153,8 @@ final appTheme = (bool isDarkTheme) => ThemeData(
         : IconThemeData(color: mainDarkColour),
     buttonTheme: ButtonThemeData(buttonColor: mainLightColour),
     cardTheme: CardTheme(
-        color: isDarkTheme ? Color(0xff343a40) : Color(0xffdee2e6),
-        shadowColor: isDarkTheme ? Color(0xff343a40) : mainDarkColour,
+        color: isDarkTheme ? Color(0xff343a40) : lightCanvasColour,
+        shadowColor: isDarkTheme ? mediumCanvasColour : electric,
         elevation: 8,
         margin: EdgeInsets.all(20)),
     // This makes the visual density adapt to the platform that you run

@@ -1,5 +1,7 @@
+import 'package:CraigStantonWeb/utils/services/locator/locator.dart';
+import 'package:CraigStantonWeb/utils/services/locator/navigation.dart';
+
 import '../../layouts/ResponsiveLayout.dart';
-import '../const_utils.dart';
 import 'package:flutter/material.dart';
 
 class WidgetUtils {
@@ -30,7 +32,10 @@ class WidgetUtils {
         padding: EdgeInsets.only(left: 20),
         child: FlatButton(
             onPressed: () {
-              Navigator.pushNamed(context, namedlink);
+              //Navigator.pushNamed(context, namedlink);
+              locator<NavigationService>().navigateTo(namedlink);
+              //locator<NavigationService>().navigatorKey.currentState.
+              Scaffold.of(context).openEndDrawer();
             },
             child: Text(
               buttontext,

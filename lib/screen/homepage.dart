@@ -5,15 +5,12 @@ import 'package:CraigStantonWeb/utils/widgets/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// Import main template and homepage class
-import '../utils/templates/main_screen_template.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MainPageTemplate(PageHome());
+    return PageHome();
   }
 }
 
@@ -29,8 +26,6 @@ class _PageHomeState extends State<PageHome> {
 
   Map<dynamic, dynamic> menuList = ConstUtils().stringUtils.menuItems;
 
-  int clickPosition = 0;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -39,28 +34,23 @@ class _PageHomeState extends State<PageHome> {
           alignment: ResponsiveLayout.isSmallScreen(context)
               ? Alignment.topCenter
               : Alignment.topRight,
-          child: Visibility(
-            visible: ResponsiveLayout.isSmallScreen(context)
-                ? clickPosition != 0
-                    ? false
-                    : true
-                : true,
-            child: Container(
-              margin: EdgeInsets.only(
-                  top: 100,
-                  right: ResponsiveLayout.isLargeScreen(context) ? 100 : 0),
-              child: ImageCarousel(),
-              height: ResponsiveLayout.isSmallScreen(context)
-                  ? 300
-                  : ResponsiveLayout.isXLargeScreen(context)
-                      ? 1000
-                      : 600,
-              width: ResponsiveLayout.isSmallScreen(context)
-                  ? 300
-                  : ResponsiveLayout.isXLargeScreen(context)
-                      ? 1000
-                      : 600,
-            ),
+          child: Container(
+            margin: EdgeInsets.only(
+                top: ResponsiveLayout.isSmallORMediumScreen(context) ? 0 : 100,
+                right: ResponsiveLayout.isLargeScreen(context) ? 100 : 0,
+                bottom:
+                    ResponsiveLayout.isSmallORMediumScreen(context) ? 50 : 0),
+            child: ImageCarousel(),
+            height: ResponsiveLayout.isSmallScreen(context)
+                ? 300
+                : ResponsiveLayout.isXLargeScreen(context)
+                    ? 1000
+                    : 600,
+            width: ResponsiveLayout.isSmallScreen(context)
+                ? 400
+                : ResponsiveLayout.isXLargeScreen(context)
+                    ? 1000
+                    : 600,
           ),
         ),
         Align(
@@ -71,7 +61,8 @@ class _PageHomeState extends State<PageHome> {
               color: Colors.transparent,
               margin: EdgeInsets.only(
                   left: ResponsiveLayout.isSmallScreen(context) ? 0 : 250,
-                  top: ResponsiveLayout.isSmallScreen(context) ? 100 : 160),
+                  top: ResponsiveLayout.isSmallScreen(context) ? 150 : 160,
+                  bottom: ResponsiveLayout.isSmallScreen(context) ? 100 : 0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
@@ -87,16 +78,16 @@ class _PageHomeState extends State<PageHome> {
                       ConstUtils().widgetUtils.menuTextWithSize(
                           context: context,
                           name: "HELLO, I’M",
-                          textSizeSmall: 16,
-                          textSizeMedium: 22,
+                          textSizeSmall: 30,
+                          textSizeMedium: 30,
                           textSizeLarge: 30),
                       ConstUtils().widgetUtils.spaceVertical(20),
                       ConstUtils().widgetUtils.headingText(
                           name: ConstUtils().stringUtils.fullname,
                           context: context,
                           textSizeLarge: 42,
-                          textSizeMedium: 36,
-                          textSizeSmall: 22),
+                          textSizeMedium: 42,
+                          textSizeSmall: 42),
                       ConstUtils().widgetUtils.spaceVertical(10),
                       ConstUtils().widgetUtils.contentText(
                             context: context,

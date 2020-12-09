@@ -3,15 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-// Import main template and homepage class
-import '../utils/templates/main_screen_template.dart';
-
 class BlogHomeScreen extends StatelessWidget {
   const BlogHomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MainPageTemplate(BlogHome());
+    return BlogHome();
   }
 }
 

@@ -1,5 +1,5 @@
 import 'package:CraigStantonWeb/utils/layouts/ResponsiveLayout.dart';
-import 'package:CraigStantonWeb/utils/templates/main_screen_template.dart';
+import 'package:CraigStantonWeb/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class AppsHome extends StatelessWidget {
@@ -7,13 +7,13 @@ class AppsHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainPageTemplate(AppsCard(
+    return AppsCard(
       title: 'Basic Weather App',
       description:
           'Experiment to get familiar with Riverpod, including calling APIs in Flutter. As it turns out, it required even more engineering with Cloud Functions to bypass CORS restrictions on Google APIs.',
       url: '/weatherapp',
       img: "https://cdn.craigstanton.com/images/weather/sun_and_clouds.png",
-    ));
+    );
   }
 }
 
@@ -47,6 +47,7 @@ class AppsCard extends StatelessWidget {
                     ResponsiveLayout.isSmallScreen(context) ? 0.9 : 0.7,
                 child: Card(
                   child: InkWell(
+                    hoverColor: mediumCanvasColour,
                     onTap: () {
                       Navigator.of(context).pushNamed(url);
                     },
