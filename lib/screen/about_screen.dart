@@ -3,15 +3,12 @@ import 'package:CraigStantonWeb/utils/models/const_utils.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
-// Import main template and homepage class
-import '../utils/templates/main_screen_template.dart';
-
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MainPageTemplate(AboutView());
+    return AboutView();
   }
 }
 

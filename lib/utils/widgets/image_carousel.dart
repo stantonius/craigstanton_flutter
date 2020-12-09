@@ -16,7 +16,6 @@ class ImageCarousel extends StatelessWidget {
     return Container(
       child: CarouselSlider(
         options: CarouselOptions(
-            height: 400.0,
             autoPlay: true,
             autoPlayAnimationDuration: Duration(seconds: 2),
             viewportFraction: 1.0),
@@ -24,7 +23,7 @@ class ImageCarousel extends StatelessWidget {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                  child: Center(child: Image.asset(item, fit: BoxFit.cover)));
+                  child: Center(child: Image.asset(item, fit: BoxFit.fill)));
             },
           );
         }).toList(),

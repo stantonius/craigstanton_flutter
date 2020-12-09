@@ -12,14 +12,13 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../main.dart';
-import '../utils/templates/main_screen_template.dart';
 
 class BlogAdminScreen extends StatelessWidget {
   const BlogAdminScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MainPageTemplate(BlogAdmin());
+    return BlogAdmin();
   }
 }
 
